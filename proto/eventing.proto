@@ -1,0 +1,25 @@
+syntax = "proto3";
+package io.nitric.eventing;
+
+service Eventing {
+  // Eventing publish API accepts publish requests and sends publish replies
+  rpc Publish (PublishRequest) returns (PublishReply);
+  rpc GetTopics (GetTopicsRequest) returns (GetTopicsReply);
+}
+
+message PublishRequest {
+  // Request message contains the name to be greeted
+  string topicName = 1;
+  map<string, string> message = 2;
+}
+
+message PublishReply {
+  // Contains the published message
+  string message = 1;
+}
+
+message GetTopicsRequest {}
+
+message GetTopicsReply {
+  repeated string topics = 1;
+}

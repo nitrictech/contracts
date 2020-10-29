@@ -1,0 +1,26 @@
+syntax = "proto3";
+package io.nitric.storage;
+
+service Storage {
+  rpc Put (PutRequest) returns (PutReply);
+  rpc Get (GetReqeuest) returns (GetReply);
+}
+
+message PutRequest {
+  string name = 1;
+  string key = 2;
+  bytes body = 3;
+}
+
+message PutReply {
+  string message = 1;
+}
+
+message GetReqeuest {
+  string name = 1;
+  string key = 2;
+}
+
+message GetReply {
+  bytes body = 1;
+}

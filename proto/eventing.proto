@@ -1,21 +1,29 @@
 syntax = "proto3";
 package io.nitric.eventing;
 
+// protoc plugin options for code generation
+option go_package = "io.nitric/eventing";
+option java_package = "io.nitric.eventing";
+option java_multiple_files = true;
+option java_outer_classname = "NitricEventing";
+
+// Service exposed by the eventing contract
 service Eventing {
-  // Eventing publish API accepts publish requests and sends publish replies
+  // Publish a message to a given topic
   rpc Publish (PublishRequest) returns (PublishReply);
+  // Get a list of available topics
   rpc GetTopics (GetTopicsRequest) returns (GetTopicsReply);
 }
 
 message PublishRequest {
   // Request message contains the name to be greeted
   string topicName = 1;
+  // The message to be published to the topic
   map<string, string> message = 2;
 }
 
 message PublishReply {
-  // Contains the published message
-  string message = 1;
+  bool success = 1;
 }
 
 message GetTopicsRequest {}

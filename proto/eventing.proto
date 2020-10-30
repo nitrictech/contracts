@@ -1,9 +1,9 @@
 syntax = "proto3";
-package io.nitric.eventing;
+package nitric.eventing;
 import "google/protobuf/struct.proto";
 
 // protoc plugin options for code generation
-option go_package = "io.nitric/eventing";
+option go_package = "nitric.io/eventing";
 option java_package = "io.nitric.eventing";
 option java_multiple_files = true;
 option java_outer_classname = "NitricEventing";

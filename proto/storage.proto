@@ -1,0 +1,40 @@
+syntax = "proto3";
+package io.nitric.storage;
+
+// protoc plugin options for code generation
+option go_package = "io.nitric/storage";
+option java_package = "io.nitric.storage";
+option java_multiple_files = true;
+option java_outer_classname = "NitricStorage";
+
+service Storage {
+  // Store an item to a bucket
+  rpc Put (PutRequest) returns (PutReply);
+  // Retrieve an item from a bucket
+  rpc Get (GetReqeuest) returns (GetReply);
+}
+
+message PutRequest {
+  // Name of the bucket to use
+  string bucketName = 1;
+  // Key to store the item under
+  string key = 2;
+  // bytes array to store
+  bytes body = 3;
+}
+
+message PutReply {
+  bool success = 1;
+}
+
+message GetReqeuest {
+  // Name of the bucket to retrieve from
+  string bucketName = 1;
+  // Key of item to retrieve
+  string key = 2;
+}
+
+message GetReply {
+  // Item as bytes
+  bytes body = 1;
+}

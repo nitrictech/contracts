@@ -11,7 +11,7 @@ service Storage {
   // Store an item to a bucket
   rpc Put (PutRequest) returns (PutReply);
   // Retrieve an item from a bucket
-  rpc Get (GetReqeuest) returns (GetReply);
+  rpc Get (GetRequest) returns (GetReply);
 }
 
 message PutRequest {
@@ -27,7 +27,7 @@ message PutReply {
   bool success = 1;
 }
 
-message GetReqeuest {
+message GetRequest {
   // Name of the bucket to retrieve from
   string bucketName = 1;
   // Key of item to retrieve

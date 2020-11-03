@@ -1,19 +1,21 @@
 syntax = "proto3";
-package nitric.eventing;
+package nitric.v1.eventing;
+
 import "google/protobuf/struct.proto";
+import "google/protobuf/empty.proto";
 
 // protoc plugin options for code generation
-option go_package = "nitric.io/eventing";
-option java_package = "io.nitric.eventing";
+option go_package = "nitric/v1/eventing";
+option java_package = "io.nitric.v1.eventing";
 option java_multiple_files = true;
 option java_outer_classname = "NitricEventing";
 
 // Service exposed by the eventing contract
 service Eventing {
   // Publish a message to a given topic
-  rpc Publish (PublishRequest) returns (PublishReply);
+  rpc Publish (PublishRequest) returns (google.protobuf.Empty);
   // Get a list of available topics
-  rpc GetTopics (GetTopicsRequest) returns (GetTopicsReply);
+  rpc GetTopics (google.protobuf.Empty) returns (GetTopicsReply);
 }
 
 message PublishRequest {
@@ -22,12 +24,6 @@ message PublishRequest {
   // The message to be published to the topic
   google.protobuf.Struct message = 2;
 }
-
-message PublishReply {
-  bool success = 1;
-}
-
-message GetTopicsRequest {}
 
 message GetTopicsReply {
   repeated string topics = 1;

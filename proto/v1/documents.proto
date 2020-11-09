@@ -1,0 +1,36 @@
+syntax = "proto3";
+package nitric.v1.documents;
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/empty.proto";
+
+// protoc plugin options for code generation
+option go_package = "nitric/v1/documents";
+option java_package = "io.nitric.v1.documents";
+option java_multiple_files = true;
+option java_outer_classname = "NitricDocuments";
+
+service Documents {
+  rpc createDocument (CreateDocumentRequest) returns (google.protobuf.Empty);
+  rpc getDocument (GetDocumentRequest) returns (GetDocumentReply);
+}
+
+message CreateDocumentRequest {
+  // This represents the high level document collection
+  // e.g. a table in SQL
+  string collection = 1;
+
+  string key = 2;
+
+  // A simple JSON object to store
+  google.protobuf.Struct document = 3;
+}
+
+message GetDocumentRequest {
+  string collection = 1;
+  string key = 2;
+}
+
+message GetDocumentReply {
+  google.protobuf.Struct document = 1;
+}

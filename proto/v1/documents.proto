@@ -13,6 +13,8 @@ option java_outer_classname = "NitricDocuments";
 service Documents {
   rpc createDocument (CreateDocumentRequest) returns (google.protobuf.Empty);
   rpc getDocument (GetDocumentRequest) returns (GetDocumentReply);
+  rpc updateDocument (UpdateDocumentRequest) returns (google.protobuf.Empty);
+  rpc deleteDocument (DeleteDocumentRequest) returns (google.protobuf.Empty);
 }
 
 message CreateDocumentRequest {
@@ -33,4 +35,21 @@ message GetDocumentRequest {
 
 message GetDocumentReply {
   google.protobuf.Struct document = 1;
+}
+
+message UpdateDocumentRequest {
+  // This represents the high level document collection
+  // e.g. a table in SQL
+  string collection = 1;
+
+  // The key of the document
+  string key = 2;
+
+  // A simple JSON object to store
+  google.protobuf.Struct document = 3;
+}
+
+message DeleteDocumentRequest {
+  string collection = 1;
+  string key = 2;
 }

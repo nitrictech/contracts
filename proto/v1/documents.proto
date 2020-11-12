@@ -11,10 +11,10 @@ option java_multiple_files = true;
 option java_outer_classname = "NitricDocuments";
 
 service Documents {
-  rpc createDocument (CreateDocumentRequest) returns (google.protobuf.Empty);
-  rpc getDocument (GetDocumentRequest) returns (GetDocumentReply);
-  rpc updateDocument (UpdateDocumentRequest) returns (google.protobuf.Empty);
-  rpc deleteDocument (DeleteDocumentRequest) returns (google.protobuf.Empty);
+  rpc CreateDocument (CreateDocumentRequest) returns (google.protobuf.Empty);
+  rpc GetDocument (GetDocumentRequest) returns (GetDocumentReply);
+  rpc UpdateDocument (UpdateDocumentRequest) returns (google.protobuf.Empty);
+  rpc DeleteDocument (DeleteDocumentRequest) returns (google.protobuf.Empty);
 }
 
 message CreateDocumentRequest {

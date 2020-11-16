@@ -13,6 +13,7 @@ service Normalizer {
 }
 
 message NormalizeRequest {
+  string method = 1;
   map<string, string> headers = 2;
   google.protobuf.Struct body = 3;
 }

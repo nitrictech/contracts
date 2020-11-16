@@ -7,7 +7,7 @@ import "google/protobuf/struct.proto";
 option go_package = "nitric/private/v1/normalizer";
 
 // Service exposed by the eventing contract
-service Eventing {
+service Normalizer {
   // Publish a message to a given topic
   rpc Normalize (NormalizeRequest) returns (NormalizeResponse);
 }

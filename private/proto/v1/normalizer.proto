@@ -19,6 +19,6 @@ message NormalizeRequest {
 }
 
 message NormalizeResponse {
-  map<string, string> headers = 2;
-  google.protobuf.Struct body = 3;
+  map<string, string> headers = 1;
+  google.protobuf.Struct body = 2;
 }

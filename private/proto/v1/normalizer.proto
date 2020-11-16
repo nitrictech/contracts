@@ -1,0 +1,23 @@
+syntax = "proto3";
+package nitric.private.v1.normalizer;
+
+import "google/protobuf/struct.proto";
+
+// protoc plugin options for code generation
+option go_package = "nitric/private/v1/normalizer";
+
+// Service exposed by the eventing contract
+service Eventing {
+  // Publish a message to a given topic
+  rpc Normalize (NormalizeRequest) returns (NormalizeResponse);
+}
+
+message NormalizeRequest {
+  map<string, string> headers = 2;
+  google.protobuf.Struct body = 3;
+}
+
+message NormalizeResponse {
+  map<string, string> headers = 2;
+  google.protobuf.Struct body = 3;
+}

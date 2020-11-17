@@ -34,8 +34,8 @@ message NitricContext {
 }
 
 enum NitricSourceType {
-  SUBSCRIPTION = 1;
-  REQUEST = 2;
+  SUBSCRIPTION = 0;
+  REQUEST = 1;
 }
 
 message NormalizeResponse {

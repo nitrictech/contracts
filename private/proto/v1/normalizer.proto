@@ -1,7 +1,6 @@
 syntax = "proto3";
 package nitric.private.v1.normalizer;
 
-import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
 // protoc plugin options for code generation

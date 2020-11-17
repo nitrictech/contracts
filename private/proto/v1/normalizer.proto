@@ -28,9 +28,8 @@ message NitricContext {
   }
   string source = 4;
   string contentType = 5;
-  // The domain type of the Nitric Context
-  // provides type hinting to the request data
-  string type = 6;
+  // type hint for the request body
+  string payloadType = 6;
   google.protobuf.Timestamp timestamp = 7;
 }
 

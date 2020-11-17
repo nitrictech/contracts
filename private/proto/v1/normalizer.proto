@@ -2,6 +2,7 @@ syntax = "proto3";
 package nitric.private.v1.normalizer;
 
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 
 // protoc plugin options for code generation
 option go_package = "nitric/private/v1/normalizer";
@@ -13,12 +14,32 @@ service Normalizer {
 }
 
 message NormalizeRequest {
-  string method = 1;
-  map<string, string> headers = 2;
-  google.protobuf.Struct body = 3;
+  map<string, string> headers = 1;
+  string contentType = 2;
+  bytes body = 3;
+}
+
+message NitricContext {
+  // opt-in idempotence
+  string requestId = 1;
+  oneof sourceType {
+    NitricSourceType type = 2;
+    string custom = 3;
+  }
+  string source = 4;
+  string contentType = 5;
+  // The domain type of the Nitric Context
+  // provides type hinting to the request data
+  string type = 6;
+  google.protobuf.Timestamp timestamp = 7;
+}
+
+enum NitricSourceType {
+  SUBSCRIPTION = 1;
+  REQUEST = 2;
 }
 
 message NormalizeResponse {
-  map<string, string> headers = 1;
-  google.protobuf.Struct body = 2;
+  NitricContext context = 1;
+  bytes body = 2;
 }

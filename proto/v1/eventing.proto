@@ -22,7 +22,13 @@ message PublishRequest {
   // Request message contains the name to be greeted
   string topicName = 1;
   // The message to be published to the topic
-  google.protobuf.Struct message = 2;
+  NitricEvent event = 2;
+}
+
+message NitricEvent {
+  string requestId = 1;
+  string payloadType = 2;
+  google.protobuf.Struct payload = 3;
 }
 
 message GetTopicsReply {

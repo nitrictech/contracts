@@ -1,0 +1,43 @@
+syntax = "proto3";
+package nitric.private.v1.normalizer;
+
+import "google/protobuf/timestamp.proto";
+
+// protoc plugin options for code generation
+option go_package = "nitric/private/v1/normalizer";
+
+// Service exposed by the eventing contract
+service Normalizer {
+  // Publish a message to a given topic
+  rpc Normalize (NormalizeRequest) returns (NormalizeResponse);
+}
+
+message NormalizeRequest {
+  map<string, string> headers = 1;
+  string contentType = 2;
+  bytes body = 3;
+}
+
+message NitricContext {
+  // opt-in idempotence
+  string requestId = 1;
+  oneof sourceType {
+    NitricSourceType type = 2;
+    string custom = 3;
+  }
+  string source = 4;
+  string contentType = 5;
+  // type hint for the request body
+  string payloadType = 6;
+  google.protobuf.Timestamp timestamp = 7;
+}
+
+enum NitricSourceType {
+  SUBSCRIPTION = 0;
+  REQUEST = 1;
+}
+
+message NormalizeResponse {
+  NitricContext context = 1;
+  bytes body = 2;
+}

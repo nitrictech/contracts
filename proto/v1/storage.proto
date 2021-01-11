@@ -12,11 +12,17 @@ service Storage {
   rpc Put (PutRequest) returns (PutReply);
   // Retrieve an item from a bucket
   rpc Get (GetRequest) returns (GetReply);
+
+  // Streaming upload service
+  rpc Upload (stream UploadRequest) returns (UploadStatus);
+
+  // Streaming download server
+  rpc Read (ReadRequest) returns (stream Chunk);
 }
 
 message PutRequest {
   // Name of the bucket to use
-  string bucketName = 1;
+  string bucket = 1;
   // Key to store the item under
   string key = 2;
   // bytes array to store
@@ -24,12 +30,13 @@ message PutRequest {
 }
 
 message PutReply {
-  bool success = 1;
+  // Readable location of the item if requested
+  string url = 1;
 }
 
 message GetRequest {
   // Name of the bucket to retrieve from
-  string bucketName = 1;
+  string bucket = 1;
   // Key of item to retrieve
   string key = 2;
 }
@@ -37,4 +44,26 @@ message GetRequest {
 message GetReply {
   // Item as bytes
   bytes body = 1;
+}
+
+enum UploadStatusCode {
+  Unknown = 0;
+  Ok = 1;
+  Failed = 2;
+}
+
+message UploadRequest {
+  string bucket = 1;
+  string key = 2;
+  // Chunk to upload
+  Chunk data = 3;
+}
+
+message UploadStatus {
+  string message = 1;
+  UploadStatusCode code = 2;
+}
+
+message Chunk {
+  bytes data = 1;
 }

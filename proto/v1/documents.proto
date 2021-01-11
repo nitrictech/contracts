@@ -11,21 +11,25 @@ option java_multiple_files = true;
 option java_outer_classname = "NitricDocuments";
 
 service Documents {
-  rpc CreateDocument (CreateDocumentRequest) returns (google.protobuf.Empty);
-  rpc GetDocument (GetDocumentRequest) returns (GetDocumentReply);
-  rpc UpdateDocument (UpdateDocumentRequest) returns (google.protobuf.Empty);
-  rpc DeleteDocument (DeleteDocumentRequest) returns (google.protobuf.Empty);
+  // Create a new document
+  rpc Create (NitricDocument) returns (google.protobuf.Empty);
+  // Get an existing document
+  rpc Get (GetDocumentRequest) returns (NitricDocument);
+  // Update an existing document
+  rpc Update (NitricDocument) returns (google.protobuf.Empty);
+  // Delete an existing document
+  rpc Delete (DeleteDocumentRequest) returns (google.protobuf.Empty);
+  // Query for a list of documents
+  rpc Find (FindRequest) returns (FindReply);
 }
 
-message CreateDocumentRequest {
-  // This represents the high level document collection
-  // e.g. a table in SQL
+// May want to include additional details here, such as indicies etc.
+message NitricDocument {
+  // The collection or "type" of document
+  // this could be considered analogous to a RDS table
   string collection = 1;
-
   string key = 2;
-
-  // A simple JSON object to store
-  google.protobuf.Struct document = 3;
+  google.protobuf.Struct contents = 2;
 }
 
 message GetDocumentRequest {
@@ -33,23 +37,57 @@ message GetDocumentRequest {
   string key = 2;
 }
 
-message GetDocumentReply {
-  google.protobuf.Struct document = 1;
-}
-
-message UpdateDocumentRequest {
-  // This represents the high level document collection
-  // e.g. a table in SQL
-  string collection = 1;
-
-  // The key of the document
-  string key = 2;
-
-  // A simple JSON object to store
-  google.protobuf.Struct document = 3;
-}
-
 message DeleteDocumentRequest {
   string collection = 1;
   string key = 2;
+}
+
+message FindRequest {
+  string collection = 1;
+  Query query = 2;
+}
+
+// TODO: Page/Stream results?
+message FindReply {
+  int32 size = 1;
+  repeated NitricDocument documents = 2;
+}
+
+enum QueryOperand {
+  // Equality
+  EQ = 1;
+  // In
+  IN = 2;
+  // Greater than
+  GT = 3;
+  // Less than
+  LT = 4;
+}
+
+enum LogicOperand {
+  AND = 1;
+  OR = 2;
+}
+
+message Query {
+  repeated Queryable = 1;
+}
+
+message Queryable {
+  oneof query {
+    QueryItem item = 1;
+    QueryCollection collection = 2;
+  }
+}
+
+message QueryCollection {
+  LogicOperand logic = 1;
+  repeated QueryItem items = 2;
+}
+
+message QueryItem {
+  string field = 1;
+  QueryOperand operand = 2;
+  // Use well known Value type...
+  string value = 3;
 }

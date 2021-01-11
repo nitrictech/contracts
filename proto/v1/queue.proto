@@ -1,0 +1,51 @@
+syntax = "proto3";
+package nitric.v1.queue;
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/empty.proto";
+
+// protoc plugin options for code generation
+option go_package = "nitric/v1/queue";
+option java_package = "io.nitric.v1.queue";
+option java_multiple_files = true;
+option java_outer_classname = "NitricQueue";
+
+// Service exposed by the eventing contract
+service Queue {
+  // List the available queues
+  rpc GetQueues (google.protobuf.Empty) returns (GetQueuesResponse);
+  // Publish a message to a given topic
+  rpc Push (PushRequest) returns (google.protobuf.Empty);
+  // Get a list of available topics
+  rpc Pop (PopRequest) returns (PopReply);
+}
+
+message PushRequest {
+  // Request message contains the name to be greeted
+  string queueName = 1;
+  // The message to be published to the topic
+  repeated NitricEvent events = 2;
+}
+
+message PopRequest {
+  // Request message contains the name to be greeted
+  string queueName = 1;
+
+  // The maximum number of messages to pop
+  int32 maxEvents = 2;
+}
+
+message PopReply {
+  int32 size = 1;
+  repeated NitricEvent events = 2;
+}
+
+message NitricEvent {
+  string requestId = 1;
+  string payloadType = 2;
+  google.protobuf.Struct payload = 3;
+}
+
+message GetQueuesResponse {
+  repeated string queueNames = 1;
+}

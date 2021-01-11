@@ -1,0 +1,49 @@
+syntax = "proto3";
+package nitric.v1.identity;
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/empty.proto";
+
+// protoc plugin options for code generation
+option go_package = "nitric/v1/identity";
+option java_package = "io.nitric.v1.identity";
+option java_multiple_files = true;
+option java_outer_classname = "NitricIdentity";
+
+service Identity {
+  // Create a new identity
+  rpc Create (CreateIdentityRequest) returns (google.protobuf.Empty);
+  // Delete an existing identity
+  rpc Delete (DeleteIdentityRequest) returns (google.protobuf.Empty);
+  // Authenticate and existing identity
+  rpc SignInWithEmailAndPassword (SignInWithEmailAndPasswordRequest) returns (AuthenticateIdentityResponse);
+}
+
+message CreateIdentityRequest {
+  string provider = 1;
+  User user = 2;
+}
+
+message DeleteIdentityRequest {
+  string provider = 1;
+  string username = 2;
+}
+
+message SignInWithEmailAndPasswordRequest {
+  string provider = 1;
+  string username = 2;
+  // Secret to authenticate the user with...
+  string password = 3;
+}
+
+// The users authentication token
+// can be returned to a client service to make subsequent requests...
+message AuthenticateIdentityResponse {
+  string token = 1;
+}
+
+message User {
+  // username can be the unique ID in this case...
+  string username = 1;
+  string email = 2;
+}

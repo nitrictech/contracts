@@ -10,30 +10,42 @@ option java_package = "io.nitric.v1.identity";
 option java_multiple_files = true;
 option java_outer_classname = "NitricIdentity";
 
-service Identity {
+// The Authentication Service
+// Used to provide abstractions for native identity platforms
+service Auth {
   // Create a new identity
-  rpc Create (CreateIdentityRequest) returns (google.protobuf.Empty);
+  rpc CreateUser (CreateUserRequest) returns (google.protobuf.Empty);
   // Delete an existing identity
-  rpc Delete (DeleteIdentityRequest) returns (google.protobuf.Empty);
-  // Authenticate and existing identity
+  rpc DeleteUser (DeleteUserRequest) returns (google.protobuf.Empty);
+  // Send Password Reset For a User
+  rpc ResetPassword (ResetPasswordRequest) returns (google.protobuf.Empty);
+  // Authenticate an existing identity without using a password
+  rpc SignInWithEmailLink (SignInWithEmailLinkRequest) returns (AuthenticateIdentityResponse);
+  // Authenticate an existing identity using its email and password
   rpc SignInWithEmailAndPassword (SignInWithEmailAndPasswordRequest) returns (AuthenticateIdentityResponse);
 }
 
-message CreateIdentityRequest {
+message CreateUserRequest {
   string provider = 1;
   User user = 2;
 }
 
-message DeleteIdentityRequest {
+message DeleteUserRequest {
   string provider = 1;
   string username = 2;
 }
 
-message SignInWithEmailAndPasswordRequest {
-  string provider = 1;
-  string username = 2;
-  // Secret to authenticate the user with...
-  string password = 3;
+message ResetPasswordRequest {
+  string email = 1;
+}
+
+message SignInWithEmailLinkRequest {
+  string email = 1;
+}
+
+message SignInWithEmailAndPassword {
+  string email = 1;
+  string password = 2;
 }
 
 // The users authentication token

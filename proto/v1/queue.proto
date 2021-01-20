@@ -1,6 +1,9 @@
 syntax = "proto3";
 package nitric.v1.queue;
 
+import "google/protobuf/struct.proto";
+import "google/protobuf/empty.proto";
+
 // protoc plugin options for code generation
 option go_package = "nitric/v1/queue";
 option java_package = "io.nitric.v1.queue";

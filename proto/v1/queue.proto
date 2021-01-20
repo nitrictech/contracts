@@ -1,0 +1,38 @@
+syntax = "proto3";
+package nitric.v1.queue;
+
+import "google/protobuf/struct.proto";
+
+// protoc plugin options for code generation
+option go_package = "nitric/v1/queue";
+option java_package = "io.nitric.v1.queue";
+option java_multiple_files = true;
+option java_outer_classname = "NitricQueue";
+
+// The Nitric Queue Service contract
+service Queue {
+  // Push event(s) to a queue
+  rpc Push (PushRequest) returns (PushResponse);
+}
+
+// An ordered array of booleans
+// matching the same order as the events given
+// in the original request, each one will mark if the
+// Send message was successful
+message PushResponse {
+  repeated NitricEvent failedMessages = 1;
+}
+
+// A Nitric Queue Event
+message NitricEvent {
+  string requestId = 1;
+  string payloadType = 2;
+  google.protobuf.Struct payload = 3;
+}
+
+message PushRequest {
+  // Name of the bucket to use
+  string queue = 1;
+  // Key to store the item under
+  repeated NitricEvent events = 2;
+}

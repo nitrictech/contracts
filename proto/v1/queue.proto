@@ -20,7 +20,12 @@ service Queue {
 // in the original request, each one will mark if the
 // Send message was successful
 message PushResponse {
-  repeated NitricEvent failedMessages = 1;
+  repeated FailedMessage failedMessages = 1;
+}
+
+message FailedMessage {
+  NitricEvent event = 1;
+  string message = 2;
 }
 
 // A Nitric Queue Event

@@ -1,8 +1,6 @@
 syntax = "proto3";
 package nitric.v1.auth;
 
-import "google/protobuf/struct.proto";
-
 // protoc plugin options for code generation
 option go_package = "nitric/v1/auth";
 option java_package = "io.nitric.v1.auth";

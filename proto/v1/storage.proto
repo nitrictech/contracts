@@ -12,6 +12,8 @@ service Storage {
   rpc Put (PutRequest) returns (PutReply);
   // Retrieve an item from a bucket
   rpc Get (GetRequest) returns (GetReply);
+  // Delete an item from a bucket
+  rpc Delete (DeleteRequest) returns (DeleteReply);
 }
 
 message PutRequest {
@@ -37,4 +39,15 @@ message GetRequest {
 message GetReply {
   // Item as bytes
   bytes body = 1;
+}
+
+message DeleteRequest {
+  // Name of the bucket to delete from
+  string bucketName = 1;
+  // Key of item to delete
+  string key = 2;
+}
+
+message DeleteReply {
+  bool success = 1;
 }

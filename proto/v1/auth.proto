@@ -18,9 +18,10 @@ service Auth {
 // in the original request, each one will mark if the
 // Send message was successful
 message CreateUserRequest {
-  string id = 1;
-  string email = 2;
-  string password = 3;
+  string tenant = 1;
+  string id = 2;
+  string email = 3;
+  string password = 4;
 }
 
 // Empty for now until we decide what we want here

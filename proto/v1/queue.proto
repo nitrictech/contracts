@@ -1,10 +1,10 @@
 syntax = "proto3";
 package nitric.v1.queue;
 
-import "google/protobuf/struct.proto";
+import "v1/common.proto";
 
 // protoc plugin options for code generation
-option go_package = "nitric/v1/queue";
+option go_package = "nitric/v1;v1";
 option java_package = "io.nitric.v1.queue";
 option java_multiple_files = true;
 option java_outer_classname = "NitricQueue";
@@ -13,8 +13,28 @@ option java_outer_classname = "NitricQueue";
 service Queue {
   // Push event(s) to a queue
   rpc Push (PushRequest) returns (PushResponse);
+  // Pop event(s) off a queue
+  rpc Pop (PopRequest) returns (PopResponse);
 }
 
+message PopRequest {
+  // Name of the queue to use
+  string queue = 1;
+  // Max number of items to pop off the queue
+  int32 depth = 2;
+}
+
+message PopResponse {
+  // Array of items from the queue
+  repeated NitricQueueItem items = 1;
+}
+
+message PushRequest {
+  // Name of the queue to use
+  string queue = 1;
+  // Array of events to push to the queue
+  repeated common.NitricEvent events = 2;
+}
 // An ordered array of booleans
 // matching the same order as the events given
 // in the original request, each one will mark if the
@@ -24,20 +44,12 @@ message PushResponse {
 }
 
 message FailedMessage {
-  NitricEvent event = 1;
+  common.NitricEvent event = 1;
   string message = 2;
 }
 
-// A Nitric Queue Event
-message NitricEvent {
-  string requestId = 1;
-  string payloadType = 2;
-  google.protobuf.Struct payload = 3;
+message NitricQueueItem {
+  common.NitricEvent event = 1;
+  string LeaseId = 2;
 }
 
-message PushRequest {
-  // Name of the bucket to use
-  string queue = 1;
-  // Key to store the item under
-  repeated NitricEvent events = 2;
-}

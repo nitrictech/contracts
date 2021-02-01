@@ -2,7 +2,7 @@ syntax = "proto3";
 package nitric.v1.queue;
 
 import "google/protobuf/struct.proto";
-import "common.proto";
+import "v1/common.proto";
 
 // protoc plugin options for code generation
 option go_package = "nitric/v1/queue";

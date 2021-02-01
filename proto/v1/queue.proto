@@ -2,6 +2,7 @@ syntax = "proto3";
 package nitric.v1.queue;
 
 import "google/protobuf/struct.proto";
+import "common.proto";
 
 // protoc plugin options for code generation
 option go_package = "nitric/v1/queue";
@@ -33,7 +34,7 @@ message PushRequest {
   // Name of the queue to use
   string queue = 1;
   // Array of events to push to the queue
-  repeated NitricEvent events = 2;
+  repeated common.NitricEvent events = 2;
 }
 // An ordered array of booleans
 // matching the same order as the events given
@@ -44,20 +45,12 @@ message PushResponse {
 }
 
 message FailedMessage {
-  NitricEvent event = 1;
+  common.NitricEvent event = 1;
   string message = 2;
 }
 
-// A Nitric Event
-// TODO: should this be a reference to the eventing.proto NitricEvent?
-message NitricEvent {
-  string requestId = 1;
-  string payloadType = 2;
-  google.protobuf.Struct payload = 3;
-}
-
 message NitricQueueItem {
-  NitricEvent event = 1;
+  common.NitricEvent event = 1;
   string LeaseId = 2;
 }
 

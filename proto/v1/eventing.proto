@@ -3,6 +3,7 @@ package nitric.v1.eventing;
 
 import "google/protobuf/struct.proto";
 import "google/protobuf/empty.proto";
+import "common.proto";
 
 // protoc plugin options for code generation
 option go_package = "nitric/v1/eventing";
@@ -22,13 +23,7 @@ message PublishRequest {
   // Request message contains the name to be greeted
   string topicName = 1;
   // The message to be published to the topic
-  NitricEvent event = 2;
-}
-
-message NitricEvent {
-  string requestId = 1;
-  string payloadType = 2;
-  google.protobuf.Struct payload = 3;
+  common.NitricEvent event = 2;
 }
 
 message GetTopicsReply {

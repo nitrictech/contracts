@@ -1,0 +1,16 @@
+syntax = "proto3";
+package nitric.v1.common;
+
+import "google/protobuf/struct.proto";
+
+// protoc plugin options for code generation
+option go_package = "nitric/v1/common";
+option java_package = "io.nitric.v1.common";
+option java_multiple_files = true;
+option java_outer_classname = "NitricCommon";
+
+message NitricEvent {
+  string requestId = 1;
+  string payloadType = 2;
+  google.protobuf.Struct payload = 3;
+}

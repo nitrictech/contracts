@@ -1,0 +1,29 @@
+syntax = "proto3";
+package nitric.v1.auth;
+
+// protoc plugin options for code generation
+option go_package = "nitric/v1/auth";
+option java_package = "io.nitric.v1.auth";
+option java_multiple_files = true;
+option java_outer_classname = "NitricAuth";
+
+// The Nitric Queue Service contract
+service Auth {
+  // Push event(s) to a queue
+  rpc CreateUser (CreateUserRequest) returns (CreateUserResponse);
+}
+
+// An ordered array of booleans
+// matching the same order as the events given
+// in the original request, each one will mark if the
+// Send message was successful
+message CreateUserRequest {
+  string tenant = 1;
+  string id = 2;
+  string email = 3;
+  string password = 4;
+}
+
+// Empty for now until we decide what we want here
+// for forwards compatibility reasons
+message CreateUserResponse {}

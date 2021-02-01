@@ -1,7 +1,6 @@
 syntax = "proto3";
 package nitric.v1.eventing;
 
-import "google/protobuf/struct.proto";
 import "google/protobuf/empty.proto";
 import "v1/common.proto";
 

@@ -50,6 +50,6 @@ message FailedMessage {
 
 message NitricQueueItem {
   common.NitricEvent event = 1;
-  string LeaseId = 2;
+  string leaseId = 2;
 }
 

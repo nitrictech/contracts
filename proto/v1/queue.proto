@@ -15,6 +15,18 @@ service Queue {
   rpc Push (PushRequest) returns (PushResponse);
   // Pop event(s) off a queue
   rpc Pop (PopRequest) returns (PopResponse);
+  // Complete an event previously popped from a queue
+  rpc Complete (CompleteRequest) returns (CompleteResponse);
+}
+
+message CompleteRequest {
+  // Name of the queue the event came from
+  string queue = 1;
+  // Lease id of the event to be competed
+  string leaseId = 2;
+}
+
+message CompleteResponse {
 }
 
 message PopRequest {

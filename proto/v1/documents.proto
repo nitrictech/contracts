@@ -2,7 +2,6 @@ syntax = "proto3";
 package nitric.v1.documents;
 
 import "google/protobuf/struct.proto";
-import "google/protobuf/empty.proto";
 
 // protoc plugin options for code generation
 option go_package = "nitric/v1;v1";
@@ -10,46 +9,57 @@ option java_package = "io.nitric.v1.documents";
 option java_multiple_files = true;
 option java_outer_classname = "NitricDocuments";
 
-service Documents {
-  rpc CreateDocument (CreateDocumentRequest) returns (google.protobuf.Empty);
-  rpc GetDocument (GetDocumentRequest) returns (GetDocumentReply);
-  rpc UpdateDocument (UpdateDocumentRequest) returns (google.protobuf.Empty);
-  rpc DeleteDocument (DeleteDocumentRequest) returns (google.protobuf.Empty);
+// Services for storage and retrieval of simple JSON documents
+service Document {
+  rpc Create (DocumentCreateRequest) returns (DocumentCreateReply);
+  rpc Get (DocumentGetRequest) returns (DocumentGetReply);
+  rpc Update (DocumentUpdateRequest) returns (DocumentUpdateReply);
+  rpc Delete (DocumentDeleteRequest) returns (DocumentDeleteReply);
 }
 
-message CreateDocumentRequest {
-  // This represents the high level document collection
-  // e.g. a table in SQL
+message DocumentCreateRequest {
+  // This represents the high level document collection, e.g. a table in SQL
   string collection = 1;
 
+  // The unique of the document to create
   string key = 2;
 
   // A simple JSON object to store
   google.protobuf.Struct document = 3;
 }
 
-message GetDocumentRequest {
+message DocumentCreateReply {}
+
+message DocumentGetRequest {
+  // The collection to retrieve the document from
   string collection = 1;
+  // The unique key of the document to retrieve
   string key = 2;
 }
 
-message GetDocumentReply {
+message DocumentGetReply {
+  // The retrieved document
   google.protobuf.Struct document = 1;
 }
 
-message UpdateDocumentRequest {
-  // This represents the high level document collection
-  // e.g. a table in SQL
+message DocumentUpdateRequest {
+  // The collection containing the existing document to be updated
   string collection = 1;
 
-  // The key of the document
+  // The unique key of the document to update
   string key = 2;
 
-  // A simple JSON object to store
+  // A simple JSON object to replace the existing document contents
   google.protobuf.Struct document = 3;
 }
 
-message DeleteDocumentRequest {
+message DocumentUpdateReply {}
+
+message DocumentDeleteRequest {
+  // The collection containing the existing document to be deleted
   string collection = 1;
+  // The unique key of the document to delete
   string key = 2;
 }
+
+message DocumentDeleteReply {}

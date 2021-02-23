@@ -1,0 +1,89 @@
+syntax = "proto3";
+package nitric.v1.queues;
+
+import "v1/common.proto";
+
+// protoc plugin options for code generation
+option go_package = "nitric/v1;v1";
+option java_package = "io.nitric.v1.queue";
+option java_multiple_files = true;
+option java_outer_classname = "NitricQueue";
+
+// The Nitric Queue Service contract
+service Queue {
+  // Push a single event to a queue
+  rpc Push (QueuePushRequest) returns (QueuePushReply);
+  // Push multiple events to a queue
+  rpc BatchPush (QueueBatchPushRequest) returns (QueueBatchPushReply);
+  // Pop event(s) off a queue
+  rpc Pop (QueuePopRequest) returns (QueuePopReply);
+  // Complete an event previously popped from a queue
+  rpc Complete (QueueCompleteRequest) returns (QueueCompleteReply);
+}
+
+// Request to push a single event to a queue
+message QueuePushRequest {
+  // The Nitric name for the queue
+  //  this will automatically be resolved to the provider specific queue identifier.
+  string queue = 1;
+  // The event to push to the queue
+  common.NitricEvent event = 2;
+}
+
+// Result of pushing an event to a queue
+message QueuePushReply {}
+
+message QueueBatchPushRequest {
+  // The Nitric name for the queue
+  //  this will automatically be resolved to the provider specific queue identifier.
+  string queue = 1;
+  // Array of events to push to the queue
+  repeated common.NitricEvent events = 2;
+}
+
+// An ordered array of booleans
+// matching the same order as the events given
+// in the original request, each one will mark if the
+// Event was successful pushed
+message QueueBatchPushReply {
+  repeated FailedEvent failedEvents = 1;
+}
+
+message QueuePopRequest {
+  // The nitric name for the queue
+  //  this will automatically be resolved to the provider specific queue identifier.
+  string queue = 1;
+  // The max number of items to pop off the queue, may be capped by provider specific limitations
+  int32 depth = 2;
+}
+
+message QueuePopReply {
+  // Array of items popped off the queue
+  repeated NitricQueueItem items = 1;
+}
+
+message QueueCompleteRequest {
+  // The nitric name for the queue
+  //  this will automatically be resolved to the provider specific queue identifier.
+  string queue = 1;
+  // Lease id of the event to be completed
+  string leaseId = 2;
+}
+
+message QueueCompleteReply {}
+
+message FailedEvent {
+  // The event that failed to be pushed
+  common.NitricEvent event = 1;
+  // A message describing the failure
+  string message = 2;
+}
+
+// A leased event, which must be completed or returned to the queue
+message NitricQueueItem {
+  // The event popped from the queue
+  common.NitricEvent event = 1;
+  // The lease id unique to the pop request, this must be used to complete, extend the lease or release the event.
+  string leaseId = 2;
+}
+

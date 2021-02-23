@@ -7,23 +7,19 @@ option java_package = "io.nitric.v1.auth";
 option java_multiple_files = true;
 option java_outer_classname = "NitricAuth";
 
-// The Nitric Queue Service contract
-service Auth {
-  // Push event(s) to a queue
-  rpc CreateUser (CreateUserRequest) returns (CreateUserResponse);
+// Service for user management activities, such as creating and deleting users
+service User {
+  // Create a new user in a tenant
+  rpc Create (UserCreateRequest) returns (UserCreateReply);
 }
 
-// An ordered array of booleans
-// matching the same order as the events given
-// in the original request, each one will mark if the
-// Send message was successful
-message CreateUserRequest {
+// Request to create a new user in the given tenant (user pool).
+message UserCreateRequest {
   string tenant = 1;
   string id = 2;
   string email = 3;
   string password = 4;
 }
 
-// Empty for now until we decide what we want here
-// for forwards compatibility reasons
-message CreateUserResponse {}
+// Successful create requests provide no response currently.
+message UserCreateReply {}

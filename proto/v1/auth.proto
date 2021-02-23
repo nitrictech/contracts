@@ -10,7 +10,7 @@ option java_outer_classname = "NitricAuth";
 // Service for user management activities, such as creating and deleting users
 service User {
   // Create a new user in a tenant
-  rpc Create (UserCreateRequest) returns (UserCreateReply);
+  rpc Create (UserCreateRequest) returns (UserCreateResponse);
 }
 
 // Request to create a new user in the given tenant (user pool).
@@ -22,4 +22,4 @@ message UserCreateRequest {
 }
 
 // Successful create requests provide no response currently.
-message UserCreateReply {}
+message UserCreateResponse {}

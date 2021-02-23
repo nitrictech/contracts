@@ -13,7 +13,7 @@ option java_outer_classname = "NitricEventing";
 // Service for publishing asynchronous events
 service Event {
   // Publish a message to a given topic
-  rpc Publish (EventPublishRequest) returns (EventPublishReply);
+  rpc Publish (EventPublishRequest) returns (EventPublishResponse);
 }
 
 // Request to publish an event to a topic
@@ -25,17 +25,17 @@ message EventPublishRequest {
 }
 
 // Result of publishing an event
-message EventPublishReply {}
+message EventPublishResponse {}
 
 // Service for management of event topics
 service Topic {
   // Return a list of existing topics in the provider environment
-  rpc List (TopicListRequest) returns (TopicListReply);
+  rpc List (TopicListRequest) returns (TopicListResponse);
 }
 
 message TopicListRequest {}
 
-message TopicListReply {
+message TopicListResponse {
   // The list of found topics
   repeated NitricTopic topics = 1;
 }

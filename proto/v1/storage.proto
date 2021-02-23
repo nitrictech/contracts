@@ -10,11 +10,11 @@ option java_outer_classname = "NitricStorage";
 // Services for storage and retrieval of files in the form of byte arrays, such as text and binary files.
 service Storage {
   // Store an item to a bucket
-  rpc Put (StoragePutRequest) returns (StoragePutReply);
+  rpc Put (StoragePutRequest) returns (StoragePutResponse);
   // Retrieve an item from a bucket
-  rpc Get (StorageGetRequest) returns (StorageGetReply);
+  rpc Get (StorageGetRequest) returns (StorageGetResponse);
   // Delete an item from a bucket
-  rpc Delete (StorageDeleteRequest) returns (StorageDeleteReply);
+  rpc Delete (StorageDeleteRequest) returns (StorageDeleteResponse);
 }
 
 // Request to put (create/update) a storage item
@@ -29,7 +29,7 @@ message StoragePutRequest {
 }
 
 // Result of putting a storage item
-message StoragePutReply {
+message StoragePutResponse {
   bool success = 1;
 }
 
@@ -43,7 +43,7 @@ message StorageGetRequest {
 }
 
 // Returned storage item
-message StorageGetReply {
+message StorageGetResponse {
   // The body bytes of the retrieved storage item
   bytes body = 1;
 }
@@ -57,4 +57,4 @@ message StorageDeleteRequest {
 }
 
 // Result of deleting a storage item
-message StorageDeleteReply {}
+message StorageDeleteResponse {}

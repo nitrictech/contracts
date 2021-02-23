@@ -11,10 +11,10 @@ option java_outer_classname = "NitricDocuments";
 
 // Services for storage and retrieval of simple JSON documents
 service Document {
-  rpc Create (DocumentCreateRequest) returns (DocumentCreateReply);
-  rpc Get (DocumentGetRequest) returns (DocumentGetReply);
-  rpc Update (DocumentUpdateRequest) returns (DocumentUpdateReply);
-  rpc Delete (DocumentDeleteRequest) returns (DocumentDeleteReply);
+  rpc Create (DocumentCreateRequest) returns (DocumentCreateResponse);
+  rpc Get (DocumentGetRequest) returns (DocumentGetResponse);
+  rpc Update (DocumentUpdateRequest) returns (DocumentUpdateResponse);
+  rpc Delete (DocumentDeleteRequest) returns (DocumentDeleteResponse);
 }
 
 message DocumentCreateRequest {
@@ -28,7 +28,7 @@ message DocumentCreateRequest {
   google.protobuf.Struct document = 3;
 }
 
-message DocumentCreateReply {}
+message DocumentCreateResponse {}
 
 message DocumentGetRequest {
   // The collection to retrieve the document from
@@ -37,7 +37,7 @@ message DocumentGetRequest {
   string key = 2;
 }
 
-message DocumentGetReply {
+message DocumentGetResponse {
   // The retrieved document
   google.protobuf.Struct document = 1;
 }
@@ -53,7 +53,7 @@ message DocumentUpdateRequest {
   google.protobuf.Struct document = 3;
 }
 
-message DocumentUpdateReply {}
+message DocumentUpdateResponse {}
 
 message DocumentDeleteRequest {
   // The collection containing the existing document to be deleted
@@ -62,4 +62,4 @@ message DocumentDeleteRequest {
   string key = 2;
 }
 
-message DocumentDeleteReply {}
+message DocumentDeleteResponse {}

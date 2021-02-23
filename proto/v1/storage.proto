@@ -7,17 +7,20 @@ option java_package = "io.nitric.v1.storage";
 option java_multiple_files = true;
 option java_outer_classname = "NitricStorage";
 
+// Services for storage and retrieval of files in the form of byte arrays, such as text and binary files.
 service Storage {
   // Store an item to a bucket
-  rpc Put (PutRequest) returns (PutReply);
+  rpc Put (StoragePutRequest) returns (StoragePutResponse);
   // Retrieve an item from a bucket
-  rpc Get (GetRequest) returns (GetReply);
+  rpc Get (StorageGetRequest) returns (StorageGetResponse);
   // Delete an item from a bucket
-  rpc Delete (DeleteRequest) returns (DeleteReply);
+  rpc Delete (StorageDeleteRequest) returns (StorageDeleteResponse);
 }
 
-message PutRequest {
-  // Name of the bucket to use
+// Request to put (create/update) a storage item
+message StoragePutRequest {
+  // Nitric name of the bucket to store in
+  //  this will be automatically resolved to the provider specific bucket identifier.
   string bucketName = 1;
   // Key to store the item under
   string key = 2;
@@ -25,29 +28,33 @@ message PutRequest {
   bytes body = 3;
 }
 
-message PutReply {
+// Result of putting a storage item
+message StoragePutResponse {
   bool success = 1;
 }
 
-message GetRequest {
-  // Name of the bucket to retrieve from
+// Request to retrieve a storage item
+message StorageGetRequest {
+  // Nitric name of the bucket to retrieve from
+  //  this will be automatically resolved to the provider specific bucket identifier.
   string bucketName = 1;
   // Key of item to retrieve
   string key = 2;
 }
 
-message GetReply {
-  // Item as bytes
+// Returned storage item
+message StorageGetResponse {
+  // The body bytes of the retrieved storage item
   bytes body = 1;
 }
 
-message DeleteRequest {
+// Request to delete a storage item
+message StorageDeleteRequest {
   // Name of the bucket to delete from
   string bucketName = 1;
   // Key of item to delete
   string key = 2;
 }
 
-message DeleteReply {
-  bool success = 1;
-}
+// Result of deleting a storage item
+message StorageDeleteResponse {}

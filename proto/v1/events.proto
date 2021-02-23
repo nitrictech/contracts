@@ -1,0 +1,47 @@
+syntax = "proto3";
+package nitric.v1.events;
+
+import "google/protobuf/empty.proto";
+import "v1/common.proto";
+
+// protoc plugin options for code generation
+option go_package = "nitric/v1;v1";
+option java_package = "io.nitric.v1.eventing";
+option java_multiple_files = true;
+option java_outer_classname = "NitricEventing";
+
+// Service for publishing asynchronous events
+service Event {
+  // Publish a message to a given topic
+  rpc Publish (EventPublishRequest) returns (EventPublishResponse);
+}
+
+// Request to publish an event to a topic
+message EventPublishRequest {
+  // The name of the topic to publish the event to
+  string topic = 1;
+  // The event to be published
+  common.NitricEvent event = 2;
+}
+
+// Result of publishing an event
+message EventPublishResponse {}
+
+// Service for management of event topics
+service Topic {
+  // Return a list of existing topics in the provider environment
+  rpc List (TopicListRequest) returns (TopicListResponse);
+}
+
+message TopicListRequest {}
+
+message TopicListResponse {
+  // The list of found topics
+  repeated NitricTopic topics = 1;
+}
+
+// Represents an event topic
+message NitricTopic {
+  // The Nitric name for the topic
+  string name = 1;
+}

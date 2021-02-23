@@ -1,7 +1,6 @@
 syntax = "proto3";
 package nitric.v1.events;
 
-import "google/protobuf/empty.proto";
 import "v1/common.proto";
 
 // protoc plugin options for code generation

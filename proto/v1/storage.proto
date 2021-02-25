@@ -29,9 +29,7 @@ message StoragePutRequest {
 }
 
 // Result of putting a storage item
-message StoragePutResponse {
-  bool success = 1;
-}
+message StoragePutResponse {}
 
 // Request to retrieve a storage item
 message StorageGetRequest {

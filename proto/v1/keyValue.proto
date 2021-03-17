@@ -1,0 +1,51 @@
+syntax = "proto3";
+package nitric.v1.keyValue;
+
+import "google/protobuf/struct.proto";
+
+// protoc plugin options for code generation
+option go_package = "nitric/v1;v1";
+option java_package = "io.nitric.v1.keyValue";
+option java_multiple_files = true;
+option java_outer_classname = "NitricKeyValue";
+
+// Services for storage and retrieval of simple JSON keyValue
+service KeyValue {
+  rpc Get (KeyValueGetRequest) returns (KeyValueGetResponse);
+  rpc Put (KeyValuePutRequest) returns (KeyValuePutResponse);
+  rpc Delete (KeyValueDeleteRequest) returns (KeyValueDeleteResponse);
+}
+
+message KeyValueGetRequest {
+  // The collection to retrieve the keyValue from
+  string collection = 1;
+  // The unique key of the keyValue to retrieve
+  string key = 2;
+}
+
+message KeyValueGetResponse {
+  // The retrieved keyValue
+  google.protobuf.Struct keyValue = 1;
+}
+
+message KeyValuePutRequest {
+  // The collection containing the existing keyValue to be inserted or updated.
+  string collection = 1;
+
+  // The unique key of the keyValue to put
+  string key = 2;
+
+  // A simple JSON object to replace the existing keyValue contents
+  google.protobuf.Struct keyValue = 3;
+}
+
+message KeyValuePutResponse {}
+
+message KeyValueDeleteRequest {
+  // The collection containing the existing keyValue to be deleted
+  string collection = 1;
+  // The unique key of the keyValue to delete
+  string key = 2;
+}
+
+message KeyValueDeleteResponse {}

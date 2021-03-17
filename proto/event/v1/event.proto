@@ -1,13 +1,14 @@
 syntax = "proto3";
-package nitric.v1.event;
+package nitric.event.v1;
 
 import "v1/common.proto";
 
 // protoc plugin options for code generation
 option go_package = "nitric/v1;v1";
-option java_package = "io.nitric.v1.eventing";
+option java_package = "io.nitric.proto.event.v1";
 option java_multiple_files = true;
-option java_outer_classname = "NitricEventing";
+option java_outer_classname = "Event";
+option php_namespace = "Nitric\\Proto\\Event\\V1";
 
 // Service for publishing asynchronous event
 service Event {

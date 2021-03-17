@@ -1,5 +1,5 @@
 syntax = "proto3";
-package nitric.v1.queues;
+package nitric.v1.queue;
 
 import "v1/common.proto";
 

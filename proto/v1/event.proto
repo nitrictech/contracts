@@ -1,5 +1,5 @@
 syntax = "proto3";
-package nitric.v1.events;
+package nitric.v1.event;
 
 import "v1/common.proto";
 
@@ -9,7 +9,7 @@ option java_package = "io.nitric.v1.eventing";
 option java_multiple_files = true;
 option java_outer_classname = "NitricEventing";
 
-// Service for publishing asynchronous events
+// Service for publishing asynchronous event
 service Event {
   // Publish a message to a given topic
   rpc Publish (EventPublishRequest) returns (EventPublishResponse);

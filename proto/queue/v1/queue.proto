@@ -28,7 +28,7 @@ message QueueSendRequest {
   //  this will automatically be resolved to the provider specific queue identifier.
   string queue = 1;
   // The event to push to the queue
-  common.NitricEvent event = 2;
+  common.v1.NitricEvent event = 2;
 }
 
 // Result of pushing an event to a queue
@@ -39,7 +39,7 @@ message QueueSendBatchRequest {
   //  this will automatically be resolved to the provider specific queue identifier.
   string queue = 1;
   // Array of events to push to the queue
-  repeated common.NitricEvent events = 2;
+  repeated common.v1.NitricEvent events = 2;
 }
 
 // An ordered array of booleans
@@ -75,7 +75,7 @@ message QueueCompleteResponse {}
 
 message FailedEvent {
   // The event that failed to be pushed
-  common.NitricEvent event = 1;
+  common.v1.NitricEvent event = 1;
   // A message describing the failure
   string message = 2;
 }
@@ -83,7 +83,7 @@ message FailedEvent {
 // A leased event, which must be completed or returned to the queue
 message NitricQueueItem {
   // The event popped from the queue
-  common.NitricEvent event = 1;
+  common.v1.NitricEvent event = 1;
   // The lease id unique to the pop request, this must be used to complete, extend the lease or release the event.
   string leaseId = 2;
 }

@@ -21,7 +21,7 @@ message EventPublishRequest {
   // The name of the topic to publish the event to
   string topic = 1;
   // The event to be published
-  common.NitricEvent event = 2;
+  common.v1.NitricEvent event = 2;
 }
 
 // Result of publishing an event

@@ -25,8 +25,8 @@ message KeyValueGetRequest {
 }
 
 message KeyValueGetResponse {
-  // The retrieved keyValue
-  google.protobuf.Struct keyValue = 1;
+  // The retrieved value
+  google.protobuf.Struct value = 1;
 }
 
 message KeyValuePutRequest {
@@ -36,8 +36,8 @@ message KeyValuePutRequest {
   // The unique key of the keyValue to put
   string key = 2;
 
-  // A simple JSON object to replace the existing keyValue contents
-  google.protobuf.Struct keyValue = 3;
+  // A simple JSON object
+  google.protobuf.Struct value = 3;
 }
 
 message KeyValuePutResponse {}

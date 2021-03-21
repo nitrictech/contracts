@@ -9,6 +9,7 @@ option java_package = "io.nitric.proto.queue.v1";
 option java_multiple_files = true;
 option java_outer_classname = "Queue";
 option php_namespace = "Nitric\\Proto\\Queue\\V1";
+option csharp_namespace = "Nitric.Client.Grpc.v1";
 
 // The Nitric Queue Service contract
 service Queue {

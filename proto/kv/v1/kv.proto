@@ -9,6 +9,7 @@ option java_package = "io.nitric.kv.v1";
 option java_multiple_files = true;
 option java_outer_classname = "KeyValue";
 option php_namespace = "Nitric\\Proto\\KeyValue\\V1";
+option csharp_namespace = "Nitric.Client.Grpc.v1";
 
 // Services for storage and retrieval of simple JSON keyValue
 service KeyValue {

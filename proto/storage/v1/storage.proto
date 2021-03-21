@@ -1,24 +1,25 @@
 syntax = "proto3";
-package nitric.v1.storage;
+package nitric.storage.v1;
 
 // protoc plugin options for code generation
 option go_package = "nitric/v1;v1";
-option java_package = "io.nitric.v1.storage";
+option java_package = "io.nitric.proto.storage.v1";
 option java_multiple_files = true;
-option java_outer_classname = "NitricStorage";
+option java_outer_classname = "Storage";
+option php_namespace = "Nitric\\Proto\\Storage\\V1";
 
 // Services for storage and retrieval of files in the form of byte arrays, such as text and binary files.
 service Storage {
-  // Store an item to a bucket
-  rpc Put (StoragePutRequest) returns (StoragePutResponse);
   // Retrieve an item from a bucket
-  rpc Get (StorageGetRequest) returns (StorageGetResponse);
+  rpc Read (StorageReadRequest) returns (StorageReadResponse);
+  // Store an item to a bucket
+  rpc Write (StorageWriteRequest) returns (StorageWriteResponse);
   // Delete an item from a bucket
   rpc Delete (StorageDeleteRequest) returns (StorageDeleteResponse);
 }
 
 // Request to put (create/update) a storage item
-message StoragePutRequest {
+message StorageWriteRequest {
   // Nitric name of the bucket to store in
   //  this will be automatically resolved to the provider specific bucket identifier.
   string bucketName = 1;
@@ -29,10 +30,10 @@ message StoragePutRequest {
 }
 
 // Result of putting a storage item
-message StoragePutResponse {}
+message StorageWriteResponse {}
 
 // Request to retrieve a storage item
-message StorageGetRequest {
+message StorageReadRequest {
   // Nitric name of the bucket to retrieve from
   //  this will be automatically resolved to the provider specific bucket identifier.
   string bucketName = 1;
@@ -41,7 +42,7 @@ message StorageGetRequest {
 }
 
 // Returned storage item
-message StorageGetResponse {
+message StorageReadResponse {
   // The body bytes of the retrieved storage item
   bytes body = 1;
 }

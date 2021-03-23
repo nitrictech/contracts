@@ -7,7 +7,7 @@ option java_package = "io.nitric.proto.auth.v1";
 option java_multiple_files = true;
 option java_outer_classname = "Auth";
 option php_namespace = "Nitric\\Proto\\Auth\\V1";
-option csharp_namespace = "Nitric.Client.Grpc.v1";
+option csharp_namespace = "Nitric.Proto.Auth.v1";
 
 // Service for user management activities, such as creating and deleting users
 service User {

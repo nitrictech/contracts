@@ -7,7 +7,7 @@ option java_package = "io.nitric.proto.storage.v1";
 option java_multiple_files = true;
 option java_outer_classname = "Storage";
 option php_namespace = "Nitric\\Proto\\Storage\\V1";
-option csharp_namespace = "Nitric.Client.Grpc.v1";
+option csharp_namespace = "Nitric.Proto.Storage.v1";
 
 // Services for storage and retrieval of files in the form of byte arrays, such as text and binary files.
 service Storage {

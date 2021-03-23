@@ -1,6 +1,8 @@
 syntax = "proto3";
 package nitric.queue.v1;
 
+import "google/protobuf/struct.proto";
+
 // protoc plugin options for code generation
 option go_package = "nitric/v1;v1";
 option java_package = "io.nitric.proto.queue.v1";
@@ -26,19 +28,19 @@ message QueueSendRequest {
   // The Nitric name for the queue
   //  this will automatically be resolved to the provider specific queue identifier.
   string queue = 1;
-  // The event to push to the queue
-  common.v1.NitricEvent event = 2;
+  // The task to push to the queue
+  NitricTask task = 2;
 }
 
-// Result of pushing an event to a queue
+// Result of pushing a task to a queue
 message QueueSendResponse {}
 
 message QueueSendBatchRequest {
   // The Nitric name for the queue
   //  this will automatically be resolved to the provider specific queue identifier.
   string queue = 1;
-  // Array of events to push to the queue
-  repeated common.v1.NitricEvent events = 2;
+  // Array of tasks to push to the queue
+  repeated NitricTask tasks = 2;
 }
 
 // An ordered array of booleans
@@ -46,7 +48,7 @@ message QueueSendBatchRequest {
 // in the original request, each one will mark if the
 // Event was successful pushed
 message QueueSendBatchResponse {
-  repeated FailedEvent failedEvents = 1;
+  repeated FailedTask failedTasks = 1;
 }
 
 message QueueReceiveRequest {
@@ -58,31 +60,31 @@ message QueueReceiveRequest {
 }
 
 message QueueReceiveResponse {
-  // Array of items popped off the queue
-  repeated NitricQueueItem items = 1;
+  // Array of tasks popped off the queue
+  repeated NitricTask tasks = 1;
 }
 
 message QueueCompleteRequest {
   // The nitric name for the queue
   //  this will automatically be resolved to the provider specific queue identifier.
   string queue = 1;
-  // Lease id of the event to be completed
+  // Lease id of the task to be completed
   string leaseId = 2;
 }
 
 message QueueCompleteResponse {}
 
-message FailedEvent {
-  // The event that failed to be pushed
-  common.v1.NitricEvent event = 1;
+message FailedTask {
+  // The task that failed to be pushed
+  NitricTask task = 1;
   // A message describing the failure
   string message = 2;
 }
 
-// A leased event, which must be completed or returned to the queue
+// A task to be sent or received from a queue.
 message NitricTask {
   string id = 1;
-  // The lease id unique to the pop request, this must be used to complete, extend the lease or release the event.
+  // The lease id unique to the pop request, this must be used to complete, extend the lease or release the task.
   string leaseId = 2;
   string payloadType = 3;
   google.protobuf.Struct payload = 4;

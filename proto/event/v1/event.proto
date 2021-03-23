@@ -9,6 +9,7 @@ option java_package = "io.nitric.proto.event.v1";
 option java_multiple_files = true;
 option java_outer_classname = "Event";
 option php_namespace = "Nitric\\Proto\\Event\\V1";
+option csharp_namespace = "Nitric.Proto.Event.v1";
 
 // Service for publishing asynchronous event
 service Event {
@@ -44,4 +45,11 @@ message TopicListResponse {
 message NitricTopic {
   // The Nitric name for the topic
   string name = 1;
+}
+
+//Represents a nitric event
+message NitricEvent {
+  string id = 1;
+  string payloadType = 2;
+  google.protobuf.Struct payload = 3;
 }

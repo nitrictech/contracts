@@ -46,3 +46,10 @@ message NitricTopic {
   // The Nitric name for the topic
   string name = 1;
 }
+
+//Represents a nitric event
+message NitricEvent {
+  string requestId = 1;
+  string payloadType = 2;
+  google.protobuf.Struct payload = 3;
+}

@@ -1,8 +1,6 @@
 syntax = "proto3";
 package nitric.queue.v1;
 
-import "common/v1/common.proto";
-
 // protoc plugin options for code generation
 option go_package = "nitric/v1;v1";
 option java_package = "io.nitric.proto.queue.v1";
@@ -82,10 +80,11 @@ message FailedEvent {
 }
 
 // A leased event, which must be completed or returned to the queue
-message NitricQueueItem {
-  // The event popped from the queue
-  common.v1.NitricEvent event = 1;
+message NitricTask {
+  string id = 1;
   // The lease id unique to the pop request, this must be used to complete, extend the lease or release the event.
   string leaseId = 2;
+  string payloadType = 3;
+  google.protobuf.Struct payload = 4;
 }
 

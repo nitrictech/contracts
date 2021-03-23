@@ -1,7 +1,7 @@
 syntax = "proto3";
 package nitric.event.v1;
 
-import "common/v1/common.proto";
+import "google/protobuf/struct.proto";
 
 // protoc plugin options for code generation
 option go_package = "nitric/v1;v1";
@@ -22,7 +22,7 @@ message EventPublishRequest {
   // The name of the topic to publish the event to
   string topic = 1;
   // The event to be published
-  common.v1.NitricEvent event = 2;
+  NitricEvent event = 2;
 }
 
 // Result of publishing an event

@@ -49,7 +49,7 @@ message NitricTopic {
 
 //Represents a nitric event
 message NitricEvent {
-  string requestId = 1;
+  string id = 1;
   string payloadType = 2;
   google.protobuf.Struct payload = 3;
 }

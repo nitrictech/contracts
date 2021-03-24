@@ -7,7 +7,7 @@ import "google/protobuf/struct.proto";
 option go_package = "nitric/v1;v1";
 option java_package = "io.nitric.proto.event.v1";
 option java_multiple_files = true;
-option java_outer_classname = "Event";
+option java_outer_classname = "Events";
 option php_namespace = "Nitric\\Proto\\Event\\V1";
 option csharp_namespace = "Nitric.Proto.Event.v1";
 

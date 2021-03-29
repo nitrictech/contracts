@@ -7,7 +7,7 @@ import "google/protobuf/struct.proto";
 option go_package = "nitric/v1;v1";
 option java_package = "io.nitric.proto.queue.v1";
 option java_multiple_files = true;
-option java_outer_classname = "Queue";
+option java_outer_classname = "Queues";
 option php_namespace = "Nitric\\Proto\\Queue\\V1";
 option csharp_namespace = "Nitric.Proto.Queue.v1";
 

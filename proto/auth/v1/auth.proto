@@ -5,7 +5,7 @@ package nitric.auth.v1;
 option go_package = "nitric/v1;v1";
 option java_package = "io.nitric.proto.auth.v1";
 option java_multiple_files = true;
-option java_outer_classname = "Auth";
+option java_outer_classname = "Auths";
 option php_namespace = "Nitric\\Proto\\Auth\\V1";
 option csharp_namespace = "Nitric.Proto.Auth.v1";
 

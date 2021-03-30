@@ -13,7 +13,7 @@ option csharp_namespace = "Nitric.Proto.Event.v1";
 
 // Service for publishing asynchronous event
 service Event {
-  // Publish a message to a given topic
+  // Publishes an message to a given topic
   rpc Publish (EventPublishRequest) returns (EventPublishResponse);
 }
 
@@ -34,8 +34,10 @@ service Topic {
   rpc List (TopicListRequest) returns (TopicListResponse);
 }
 
+// Request for the Topic List method
 message TopicListRequest {}
 
+// Topic List Response
 message TopicListResponse {
   // The list of found topics
   repeated NitricTopic topics = 1;
@@ -47,9 +49,12 @@ message NitricTopic {
   string name = 1;
 }
 
-//Represents a nitric event
+// Nitric Event Model
 message NitricEvent {
+  // A Unique ID for the Nitric Event
   string id = 1;
+  // A content hint for the events payload
   string payloadType = 2;
+  // The payload of the event
   google.protobuf.Struct payload = 3;
 }

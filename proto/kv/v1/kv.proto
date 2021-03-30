@@ -11,10 +11,13 @@ option java_outer_classname = "KeyValues";
 option php_namespace = "Nitric\\Proto\\KeyValue\\V1";
 option csharp_namespace = "Nitric.Proto.KeyValue.v1";
 
-// Services for storage and retrieval of simple JSON keyValue
+// Service for storage and retrieval of simple JSON keyValue
 service KeyValue {
+  // Get an existing key
   rpc Get (KeyValueGetRequest) returns (KeyValueGetResponse);
+  // Create a new or overwrite and existing key
   rpc Put (KeyValuePutRequest) returns (KeyValuePutResponse);
+  // Delete an existing
   rpc Delete (KeyValueDeleteRequest) returns (KeyValueDeleteResponse);
 }
 

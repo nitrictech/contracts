@@ -3,44 +3,31 @@ name: Tag and Draft Release
 on:
   push:
     branches:
-      - master
+      - main
+      - feature/test-nit-180
 
 jobs:
   version:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
+        token: ${{ secrets.STANDARD_VERSION_BUMP_PAT }}
     - name: Git Identity
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Bump version and push tag
-      uses: anothrNick/github-tag-action@1.26.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        WITH_V: true
-      id: bump
-    - name: Merge Master -> Develop
+    - name: Generate Documentation
+      uses: addnab/docker-run-action@v3
+      with:
+        image: pseudomuto/protoc-gen-doc
+        options: -v $(pwd)/proto:/protos -v $(pwd)/:/docs
+        run: |
+          ./entrpoint.sh --doc_opt=markdown,DOCS.md /protos/*/**.proto
+    - name: Commit Generated Docs
       run: |
         git fetch
-        git checkout develop
-        git merge --no-ff master -m "Merge version bump into develop"
-        git push origin master develop --follow-tags
-    - name: Create Draft Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ steps.bump.outputs.tag }}
-        release_name: Release ${{ steps.bump.outputs.tag }}
-        body: See CHANGELOG.md for changes
-        draft: true
-        prerelease: false
+        git checkout ${GITHUB_REF##*/}
+        git push origin ${GITHUB_REF##*/}

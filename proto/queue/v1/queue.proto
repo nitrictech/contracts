@@ -26,34 +26,32 @@ service Queue {
 // Request to push a single event to a queue
 message QueueSendRequest {
   // The Nitric name for the queue
-  //  this will automatically be resolved to the provider specific queue identifier.
+  // this will automatically be resolved to the provider specific queue identifier.
   string queue = 1;
   // The task to push to the queue
   NitricTask task = 2;
 }
 
-// Result of pushing a task to a queue
+// Result of pushing a single task to a queue
 message QueueSendResponse {}
 
 message QueueSendBatchRequest {
   // The Nitric name for the queue
-  //  this will automatically be resolved to the provider specific queue identifier.
+  // this will automatically be resolved to the provider specific queue identifier.
   string queue = 1;
   // Array of tasks to push to the queue
   repeated NitricTask tasks = 2;
 }
 
-// An ordered array of booleans
-// matching the same order as the events given
-// in the original request, each one will mark if the
-// Event was successful pushed
+// Response for sending a collection of tasks
 message QueueSendBatchResponse {
+  // A list of tasks that failed to be queued
   repeated FailedTask failedTasks = 1;
 }
 
 message QueueReceiveRequest {
   // The nitric name for the queue
-  //  this will automatically be resolved to the provider specific queue identifier.
+  // this will automatically be resolved to the provider specific queue identifier.
   string queue = 1;
   // The max number of items to pop off the queue, may be capped by provider specific limitations
   int32 depth = 2;
@@ -83,10 +81,13 @@ message FailedTask {
 
 // A task to be sent or received from a queue.
 message NitricTask {
+  // A unique id for the task
   string id = 1;
   // The lease id unique to the pop request, this must be used to complete, extend the lease or release the task.
   string leaseId = 2;
+  // A content hint for the tasks payload
   string payloadType = 3;
+  // The payload of the task
   google.protobuf.Struct payload = 4;
 }
 

@@ -26,7 +26,12 @@ message EventPublishRequest {
 }
 
 // Result of publishing an event
-message EventPublishResponse {}
+message EventPublishResponse {
+  // The id of the published message
+  // When an id was not supplied
+  // one should be automatically generated
+  string id = 1;
+}
 
 // Service for management of event topics
 service Topic {

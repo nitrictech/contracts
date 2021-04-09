@@ -141,6 +141,11 @@ Request to publish an event to a topic
 Result of publishing an event
 
 
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | The id of the published message When an id was not supplied one should be automatically generated |
+
+
 
 
 

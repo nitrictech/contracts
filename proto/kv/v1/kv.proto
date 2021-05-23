@@ -15,17 +15,23 @@ option csharp_namespace = "Nitric.Proto.KeyValue.v1";
 service KeyValue {
   // Get an existing key
   rpc Get (KeyValueGetRequest) returns (KeyValueGetResponse);
+
   // Create a new or overwrite and existing key
   rpc Put (KeyValuePutRequest) returns (KeyValuePutResponse);
+
   // Delete an existing
   rpc Delete (KeyValueDeleteRequest) returns (KeyValueDeleteResponse);
+  
+  // Query the collection
+  rpc Query (KeyValueQueryRequest) returns (KeyValueQueryResponse);
 }
 
 message KeyValueGetRequest {
   // The collection to retrieve the keyValue from
   string collection = 1;
+
   // The unique key of the keyValue to retrieve
-  string key = 2;
+  google.protobuf.Struct key = 2;
 }
 
 message KeyValueGetResponse {
@@ -38,7 +44,7 @@ message KeyValuePutRequest {
   string collection = 1;
 
   // The unique key of the keyValue to put
-  string key = 2;
+  google.protobuf.Struct key = 2;
 
   // A simple JSON object
   google.protobuf.Struct value = 3;
@@ -49,8 +55,36 @@ message KeyValuePutResponse {}
 message KeyValueDeleteRequest {
   // The collection containing the existing keyValue to be deleted
   string collection = 1;
+
   // The unique key of the keyValue to delete
-  string key = 2;
+  google.protobuf.Struct key = 2;
 }
 
 message KeyValueDeleteResponse {}
+
+message KeyValueQueryRequest {
+  message Expression {
+    // The query operand or attribute
+    string operand = 1;
+
+    // The query operator [ = | < | <= | > | >= | startsWith ]
+    string operator = 2;
+
+    // The query expression value
+    string value = 3;
+  }
+
+  // The query from collection
+  string collection = 1;
+
+  // The query expressions
+  repeated Expression expressions = 2;
+
+  // The query fetch limit
+  int32 limit = 3;
+}
+
+message KeyValueQueryResponse {
+  // The retrieved values
+  repeated google.protobuf.Struct values = 1;
+}

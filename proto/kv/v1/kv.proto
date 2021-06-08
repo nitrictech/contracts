@@ -82,9 +82,15 @@ message KeyValueQueryRequest {
 
   // The query fetch limit
   int32 limit = 3;
+
+  // The query paging continuation token
+  google.protobuf.Struct pagingToken = 4;
 }
 
 message KeyValueQueryResponse {
   // The retrieved values
   repeated google.protobuf.Struct values = 1;
+
+  // The query paging continuation token, when not null further results are available
+  google.protobuf.Struct pagingToken = 2;
 }

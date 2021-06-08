@@ -102,5 +102,5 @@ message HttpResponse {
 // only whether or not they were successfully responded to
 message EventStatus {
   // Success status of the handled event
-  bool success = 0;
+  bool success = 1;
 }

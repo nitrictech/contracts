@@ -69,11 +69,11 @@ message HttpTriggerContext {
   // The request method
   string method = 1;
   // The request headers
-  map<string, string> headers = 3;
+  map<string, string> headers = 2;
   // The path params (if parseable by the membrane)
-  map<string, string> path_params = 4;
+  map<string, string> path_params = 3;
   // The query params (if parseable by the membrane)
-  map<string, string> query_params = 5;
+  map<string, string> query_params = 4;
 }
 
 message TopicTriggerContext {
@@ -103,7 +103,7 @@ message TriggerResponse {
 // Note this does not have to be handled by the
 // User at all but they will have the option of control
 // If they choose...
-message HttpResponse {
+message HttpResponseContext {
   // The request headers...
   map<string, string> headers = 1;
   // The HTTP status of the request
@@ -113,7 +113,7 @@ message HttpResponse {
 // Specific event response message
 // We do not accept responses for events
 // only whether or not they were successfully responded to
-message TopicResponse {
+message TopicResponseContext {
   // Success status of the handled event
   bool success = 1;
 }

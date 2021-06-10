@@ -12,42 +12,39 @@ option csharp_namespace = "Nitric.Proto.Faas.v1";
 // Service for management of event topics
 service Faas {
   // Return a list of existing topics in the provider environment
-  rpc TriggerStream (stream Message) returns (stream Message);
+  rpc TriggerStream (stream ClientMessage) returns (stream ServerMessage);
 }
 
-// Request for the Topic List method
-message Message {
-  // The ID of this message
-  // Will be used to tie a request response pair together
+// Messages the client is able to send to the server
+message ClientMessage {
+  // Client message ID, used to pair requests/responses
   string id = 1;
 
   oneof content {
-    // Begin stream between the membrane and client
+    // Client initialisation request
     InitRequest init_request = 2;
-    // Membrane replies to the client with initialization information
-    InitResponse init_response = 3;
-    // The membrane requests the client to handle a trigger
-    TriggerRequest trigger_request = 4;
-    // The client responds with the triggers result
-    TriggerResponse trigger_response = 5;
+
+    // Client responsding with result of
+    // a trigger
+    TriggerResponse trigger_response = 3; 
   }
 }
 
-// Trigger stream initialization message
-// This will be invoked from the FaaS client to begin
-// a streaming session with the membrane
-message InitRequest {
-  // TODO: We may want to support multiple worker or even multiple workers
-  // For now this message can remain empty
-}
+// Messages the server is able to send to the client
+message ServerMessage {
+  // Server message ID, used to pair requests/responses
+  string id = 1;
 
-// Response stream initialization response message
-// This can be used to provide a FaaS client contextual information it
-// may need for exection
-message InitResponse {
-  // TODO: Leave this empty for now
-  // We will implement the lifecycle in clients
-  // Fields should be added as required
+  oneof content {
+    // Server responding
+    // with client configuration details to an
+    // InitRequest
+    InitResponse init_response = 2;
+
+    // Server requesting client to
+    // process a trigger
+    TriggerRequest trigger_request = 3;
+  }
 }
 
 // The membrane has a trigger for this function to handle

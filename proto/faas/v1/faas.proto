@@ -47,6 +47,13 @@ message ServerMessage {
   }
 }
 
+// Placeholder message
+message InitRequest {}
+
+// Placeholder message
+message InitResponse {}
+
+
 // The membrane has a trigger for this function to handle
 message TriggerRequest {
   // The data in the trigger

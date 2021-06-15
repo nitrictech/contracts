@@ -31,7 +31,7 @@ message KeyValueGetRequest {
   string collection = 1;
 
   // The unique key of the keyValue to retrieve
-  google.protobuf.Struct key = 2;
+  map<string, string> key = 2;
 }
 
 message KeyValueGetResponse {
@@ -44,7 +44,7 @@ message KeyValuePutRequest {
   string collection = 1;
 
   // The unique key of the keyValue to put
-  google.protobuf.Struct key = 2;
+  map<string, string> key = 2;
 
   // A simple JSON object
   google.protobuf.Struct value = 3;
@@ -57,7 +57,7 @@ message KeyValueDeleteRequest {
   string collection = 1;
 
   // The unique key of the keyValue to delete
-  google.protobuf.Struct key = 2;
+  map<string, string> key = 2;
 }
 
 message KeyValueDeleteResponse {}
@@ -84,7 +84,7 @@ message KeyValueQueryRequest {
   int32 limit = 3;
 
   // The query paging continuation token
-  google.protobuf.Struct pagingToken = 4;
+  map<string, string> pagingToken = 4;
 }
 
 message KeyValueQueryResponse {
@@ -92,5 +92,5 @@ message KeyValueQueryResponse {
   repeated google.protobuf.Struct values = 1;
 
   // The query paging continuation token, when not null further results are available
-  google.protobuf.Struct pagingToken = 2;
+  map<string, string> pagingToken = 2;
 }

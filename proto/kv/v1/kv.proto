@@ -26,12 +26,22 @@ service KeyValue {
   rpc Query (KeyValueQueryRequest) returns (KeyValueQueryResponse);
 }
 
+// Key type for KV Store
+message Key {
+  oneof key {
+    // Value for a string key
+    string string = 1;
+    // Value for a number key
+    int number = 2;
+  }
+}
+
 message KeyValueGetRequest {
   // The collection to retrieve the keyValue from
   string collection = 1;
 
   // The unique key of the keyValue to retrieve
-  map<string, string> key = 2;
+  map<string, Key> key = 2;
 }
 
 message KeyValueGetResponse {
@@ -44,7 +54,7 @@ message KeyValuePutRequest {
   string collection = 1;
 
   // The unique key of the keyValue to put
-  map<string, string> key = 2;
+  map<string, Key> key = 2;
 
   // A simple JSON object
   google.protobuf.Struct value = 3;
@@ -57,7 +67,7 @@ message KeyValueDeleteRequest {
   string collection = 1;
 
   // The unique key of the keyValue to delete
-  map<string, string> key = 2;
+  map<string, Key> key = 2;
 }
 
 message KeyValueDeleteResponse {}
@@ -84,7 +94,7 @@ message KeyValueQueryRequest {
   int32 limit = 3;
 
   // The query paging continuation token
-  map<string, string> pagingToken = 4;
+  map<string, Key> pagingToken = 4;
 }
 
 message KeyValueQueryResponse {
@@ -92,5 +102,5 @@ message KeyValueQueryResponse {
   repeated google.protobuf.Struct values = 1;
 
   // The query paging continuation token, when not null further results are available
-  map<string, string> pagingToken = 2;
+  map<string, Key> pagingToken = 2;
 }

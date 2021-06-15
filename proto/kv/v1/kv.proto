@@ -32,7 +32,7 @@ message Key {
     // Value for a string key
     string string = 1;
     // Value for a number key
-    int number = 2;
+    int64 number = 2;
   }
 }
 

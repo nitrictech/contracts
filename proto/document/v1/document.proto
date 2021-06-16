@@ -27,8 +27,10 @@ service Document {
 }
 
 message Key {
+  // The item collection
   string collection = 1;
 
+  // The items unique id
   string id = 2;
 }
 
@@ -90,7 +92,7 @@ message DocQueryRequest {
   int32 limit = 3;
 
   // The query paging continuation token
-  map<string, KeyType> pagingToken = 4;
+  google.protobuf.Struct pagingToken = 4;
 }
 
 message DocQueryResponse {
@@ -98,5 +100,5 @@ message DocQueryResponse {
   repeated google.protobuf.Struct values = 1;
 
   // The query paging continuation token, when not null further results are available
-  map<string, KeyType> pagingToken = 2;
+  google.protobuf.Struct pagingToken = 2;
 }

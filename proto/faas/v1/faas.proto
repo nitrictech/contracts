@@ -5,7 +5,7 @@ package nitric.faas.v1;
 option go_package = "nitric/v1;v1";
 option java_package = "io.nitric.proto.faas.v1";
 option java_multiple_files = true;
-option java_outer_classname = "Faas";
+option java_outer_classname = "FaasGrpc";
 option php_namespace = "Nitric\\Proto\\Faas\\V1";
 option csharp_namespace = "Nitric.Proto.Faas.v1";
 

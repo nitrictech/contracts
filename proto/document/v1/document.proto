@@ -12,7 +12,7 @@ option php_namespace = "Nitric\\Proto\\Document\\V1";
 option csharp_namespace = "Nitric.Proto.Document.v1";
 
 // Service for storage and retrieval of simple JSON keyValue
-service Doc {
+service Document {
   // Get an existing key
   rpc Get (DocGetRequest) returns (DocGetResponse);
 

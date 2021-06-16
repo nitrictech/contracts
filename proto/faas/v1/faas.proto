@@ -99,9 +99,6 @@ message TriggerResponse {
   // The data returned in the response
   bytes data = 1;
 
-  // The MIME type of the returned data
-  string mime_type = 2;
-
   // The context of the request response
   // Typically this will be one to one with the Trigger Context
   // i.e. if you recieve http context you may return http context

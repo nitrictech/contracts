@@ -1,0 +1,102 @@
+syntax = "proto3";
+package nitric.document.v1;
+
+import "google/protobuf/struct.proto";
+
+// protoc plugin options for code generation
+option go_package = "nitric/v1;v1";
+option java_package = "io.nitric.proto.document.v1";
+option java_multiple_files = true;
+option java_outer_classname = "Documents";
+option php_namespace = "Nitric\\Proto\\Document\\V1";
+option csharp_namespace = "Nitric.Proto.Document.v1";
+
+// Service for storage and retrieval of simple JSON keyValue
+service Doc {
+  // Get an existing key
+  rpc Get (DocGetRequest) returns (DocGetResponse);
+
+  // Create a new or overwrite and existing key
+  rpc Put (DocPutRequest) returns (DocPutResponse);
+
+  // Delete an existing
+  rpc Delete (DocDeleteRequest) returns (DocDeleteResponse);
+  
+  // Query the collection
+  rpc Query (DocQueryRequest) returns (DocQueryResponse);
+}
+
+message Key {
+  string collection = 1;
+
+  string id = 2;
+}
+
+message DocGetRequest {
+  // The parent root key
+  Key key = 1;
+
+  // The optional sub collection key
+  Key subKey = 2;
+}
+
+message DocGetResponse {
+  // The retrieved value
+  google.protobuf.Struct value = 1;
+}
+
+message DocPutRequest {
+  // The parent root key
+  Key key = 1;
+
+  // The optional sub collection key
+  Key subKey = 2;
+
+  // A simple JSON object to store
+  google.protobuf.Struct value = 3;
+}
+
+message DocPutResponse {}
+
+message DocDeleteRequest {
+  // The parent root key
+  Key key = 1;
+
+  // The sub collection key (optional)
+  Key subKey = 2;
+}
+
+message DocDeleteResponse {}
+
+message DocQueryRequest {
+  message Expression {
+    // The query operand or attribute
+    string operand = 1;
+
+    // The query operator [ = | < | <= | > | >= | startsWith ]
+    string operator = 2;
+
+    // The query expression value
+    string value = 3;
+  }
+
+  // The query from collection
+  string collection = 1;
+
+  // The query expressions
+  repeated Expression expressions = 2;
+
+  // The query fetch limit
+  int32 limit = 3;
+
+  // The query paging continuation token
+  map<string, KeyType> pagingToken = 4;
+}
+
+message DocQueryResponse {
+  // The retrieved values
+  repeated google.protobuf.Struct values = 1;
+
+  // The query paging continuation token, when not null further results are available
+  map<string, KeyType> pagingToken = 2;
+}

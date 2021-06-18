@@ -11,7 +11,7 @@ option csharp_namespace = "Nitric.Proto.Faas.v1";
 
 // Service for streaming communication with gRPC FaaS implementations
 service Faas {
-  // Return a list of existing topics in the provider environment
+  // Begin streaming triggers/response to/from the membrane
   rpc TriggerStream (stream ClientMessage) returns (stream ServerMessage);
 }
 

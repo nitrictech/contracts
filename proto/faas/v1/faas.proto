@@ -9,7 +9,7 @@ option java_outer_classname = "NitricFaas";
 option php_namespace = "Nitric\\Proto\\Faas\\V1";
 option csharp_namespace = "Nitric.Proto.Faas.v1";
 
-// Service for management of event topics
+// Service for streaming communication with gRPC FaaS implementations
 service Faas {
   // Return a list of existing topics in the provider environment
   rpc TriggerStream (stream ClientMessage) returns (stream ServerMessage);
@@ -54,7 +54,7 @@ message InitRequest {}
 message InitResponse {}
 
 
-// The membrane has a trigger for this function to handle
+// The server has a trigger for the client to handle
 message TriggerRequest {
   // The data in the trigger
   bytes data = 1;
@@ -101,7 +101,7 @@ message TriggerResponse {
 
   // The context of the request response
   // Typically this will be one to one with the Trigger Context
-  // i.e. if you recieve http context you may return http context
+  // i.e. if you receive http context you may return http context
   oneof context {
     // response to a http request
     HttpResponseContext http = 10;
@@ -123,7 +123,7 @@ message HttpResponseContext {
 
 // Specific event response message
 // We do not accept responses for events
-// only whether or not they were successfully responded to
+// only whether or not they were successfully processed
 message TopicResponseContext {
   // Success status of the handled event
   bool success = 1;

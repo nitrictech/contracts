@@ -86,7 +86,7 @@ message NitricTask {
   // The lease id unique to the pop request, this must be used to complete, extend the lease or release the task.
   string lease_id = 2;
   // A content hint for the tasks payload
-  string payloadType = 3;
+  string payload_type = 3;
   // The payload of the task
   google.protobuf.Struct payload = 4;
 }

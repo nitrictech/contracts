@@ -59,7 +59,7 @@ message NitricEvent {
   // A Unique ID for the Nitric Event
   string id = 1;
   // A content hint for the events payload
-  string payloadType = 2;
+  string payload_type = 2;
   // The payload of the event
   google.protobuf.Struct payload = 3;
 }

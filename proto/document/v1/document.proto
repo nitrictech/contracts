@@ -114,7 +114,7 @@ message DocQueryAllRequest {
   Key key = 1;
 
   // The optional query sub collection name
-  string subcollection = 2;
+  string sub_collection = 2;
 
   // The query expressions
   repeated Expression expressions = 3;

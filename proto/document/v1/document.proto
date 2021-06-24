@@ -13,17 +13,20 @@ option csharp_namespace = "Nitric.Proto.Document.v1";
 
 // Service for storage and retrieval of simple JSON keyValue
 service Document {
-  // Get an existing key
+  // Get an existing document
   rpc Get (DocGetRequest) returns (DocGetResponse);
 
-  // Create a new or overwrite and existing key
-  rpc Put (DocPutRequest) returns (DocPutResponse);
+  // Create a new or overwrite an existing document
+  rpc Set (DocSetRequest) returns (DocSetResponse);
 
-  // Delete an existing
+  // Delete an existing document
   rpc Delete (DocDeleteRequest) returns (DocDeleteResponse);
   
-  // Query the collection
+  // Query the document collection (pagination support)
   rpc Query (DocQueryRequest) returns (DocQueryResponse);
+  
+  // Query All the document collection (streaming support)
+  rpc QueryAll (DocQueryAllRequest) returns (stream DocQueryAllResponse);
 }
 
 message Key {
@@ -35,11 +38,11 @@ message Key {
 }
 
 message DocGetRequest {
-  // The parent root key
+  // The document root key
   Key key = 1;
 
   // The optional sub collection key
-  Key subKey = 2;
+  Key sub_key = 2;
 }
 
 message DocGetResponse {
@@ -47,52 +50,55 @@ message DocGetResponse {
   google.protobuf.Struct value = 1;
 }
 
-message DocPutRequest {
-  // The parent root key
+message DocSetRequest {
+  // The document root key
   Key key = 1;
 
   // The optional sub collection key
-  Key subKey = 2;
+  Key sub_key = 2;
 
   // A simple JSON object to store
   google.protobuf.Struct value = 3;
 }
 
-message DocPutResponse {}
+message DocSetResponse {}
 
 message DocDeleteRequest {
-  // The parent root key
+  // The document root key
   Key key = 1;
 
-  // The sub collection key (optional)
-  Key subKey = 2;
+  // The optional sub collection key
+  Key sub_key = 2;
 }
 
 message DocDeleteResponse {}
 
+message Expression {
+  // The query operand or attribute
+  string operand = 1;
+
+  // The query operator [ = | < | <= | > | >= | startsWith ]
+  string operator = 2;
+
+  // The query expression value
+  string value = 3;
+}
+
 message DocQueryRequest {
-  message Expression {
-    // The query operand or attribute
-    string operand = 1;
+  // The query root key.collection, and optional parent key.id for subcollection queries
+  Key key = 1;
 
-    // The query operator [ = | < | <= | > | >= | startsWith ]
-    string operator = 2;
-
-    // The query expression value
-    string value = 3;
-  }
-
-  // The query from collection
-  string collection = 1;
+  // The optional sub collection name
+  string sub_collection = 2;
 
   // The query expressions
-  repeated Expression expressions = 2;
+  repeated Expression expressions = 3;
 
   // The query fetch limit
-  int32 limit = 3;
+  int32 limit = 4;
 
   // The query paging continuation token
-  google.protobuf.Struct pagingToken = 4;
+  map<string, string> paging_token = 5;
 }
 
 message DocQueryResponse {
@@ -100,5 +106,21 @@ message DocQueryResponse {
   repeated google.protobuf.Struct values = 1;
 
   // The query paging continuation token, when not null further results are available
-  google.protobuf.Struct pagingToken = 2;
+  map<string, string> paging_token = 2;
+}
+
+message DocQueryAllRequest {
+  // The query root key.collection, and optional parent key.id for sub collection queries
+  Key key = 1;
+
+  // The optional query sub collection name
+  string subcollection = 2;
+
+  // The query expressions
+  repeated Expression expressions = 3;
+}
+
+message DocQueryAllResponse {
+  // The retrieved values
+  repeated google.protobuf.Struct values = 1;
 }

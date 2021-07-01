@@ -3,12 +3,6 @@
 
 ## Table of Contents
 
-- [auth/v1/auth.proto](#auth/v1/auth.proto)
-    - [UserCreateRequest](#nitric.auth.v1.UserCreateRequest)
-    - [UserCreateResponse](#nitric.auth.v1.UserCreateResponse)
-  
-    - [User](#nitric.auth.v1.User)
-  
 - [event/v1/event.proto](#event/v1/event.proto)
     - [EventPublishRequest](#nitric.event.v1.EventPublishRequest)
     - [EventPublishResponse](#nitric.event.v1.EventPublishResponse)
@@ -19,6 +13,23 @@
   
     - [Event](#nitric.event.v1.Event)
     - [Topic](#nitric.event.v1.Topic)
+  
+- [faas/v1/faas.proto](#faas/v1/faas.proto)
+    - [ClientMessage](#nitric.faas.v1.ClientMessage)
+    - [HttpResponseContext](#nitric.faas.v1.HttpResponseContext)
+    - [HttpResponseContext.HeadersEntry](#nitric.faas.v1.HttpResponseContext.HeadersEntry)
+    - [HttpTriggerContext](#nitric.faas.v1.HttpTriggerContext)
+    - [HttpTriggerContext.HeadersEntry](#nitric.faas.v1.HttpTriggerContext.HeadersEntry)
+    - [HttpTriggerContext.QueryParamsEntry](#nitric.faas.v1.HttpTriggerContext.QueryParamsEntry)
+    - [InitRequest](#nitric.faas.v1.InitRequest)
+    - [InitResponse](#nitric.faas.v1.InitResponse)
+    - [ServerMessage](#nitric.faas.v1.ServerMessage)
+    - [TopicResponseContext](#nitric.faas.v1.TopicResponseContext)
+    - [TopicTriggerContext](#nitric.faas.v1.TopicTriggerContext)
+    - [TriggerRequest](#nitric.faas.v1.TriggerRequest)
+    - [TriggerResponse](#nitric.faas.v1.TriggerResponse)
+  
+    - [Faas](#nitric.faas.v1.Faas)
   
 - [kv/v1/kv.proto](#kv/v1/kv.proto)
     - [KeyValueDeleteRequest](#nitric.kv.v1.KeyValueDeleteRequest)
@@ -55,60 +66,6 @@
     - [Storage](#nitric.storage.v1.Storage)
   
 - [Scalar Value Types](#scalar-value-types)
-
-
-
-<a name="auth/v1/auth.proto"></a>
-<p align="right"><a href="#top">Top</a></p>
-
-## auth/v1/auth.proto
-
-
-
-<a name="nitric.auth.v1.UserCreateRequest"></a>
-
-### UserCreateRequest
-Request to create a new user in the given tenant (user pool).
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| tenant | [string](#string) |  |  |
-| id | [string](#string) |  |  |
-| email | [string](#string) |  |  |
-| password | [string](#string) |  |  |
-
-
-
-
-
-
-<a name="nitric.auth.v1.UserCreateResponse"></a>
-
-### UserCreateResponse
-Successful create requests provide no response currently.
-
-
-
-
-
- 
-
- 
-
- 
-
-
-<a name="nitric.auth.v1.User"></a>
-
-### User
-Service for user management activities, such as creating and deleting users
-
-| Method Name | Request Type | Response Type | Description |
-| ----------- | ------------ | ------------- | ------------|
-| Create | [UserCreateRequest](#nitric.auth.v1.UserCreateRequest) | [UserCreateResponse](#nitric.auth.v1.UserCreateResponse) | Create a new user in a tenant |
-
- 
 
 
 
@@ -159,7 +116,7 @@ Nitric Event Model
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | id | [string](#string) |  | A Unique ID for the Nitric Event |
-| payloadType | [string](#string) |  | A content hint for the events payload |
+| payload_type | [string](#string) |  | A content hint for the events payload |
 | payload | [google.protobuf.Struct](#google.protobuf.Struct) |  | The payload of the event |
 
 
@@ -231,6 +188,238 @@ Service for management of event topics
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
 | List | [TopicListRequest](#nitric.event.v1.TopicListRequest) | [TopicListResponse](#nitric.event.v1.TopicListResponse) | Return a list of existing topics in the provider environment |
+
+ 
+
+
+
+<a name="faas/v1/faas.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## faas/v1/faas.proto
+
+
+
+<a name="nitric.faas.v1.ClientMessage"></a>
+
+### ClientMessage
+Messages the client is able to send to the server
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | Client message ID, used to pair requests/responses |
+| init_request | [InitRequest](#nitric.faas.v1.InitRequest) |  | Client initialisation request |
+| trigger_response | [TriggerResponse](#nitric.faas.v1.TriggerResponse) |  | Client responsding with result of a trigger |
+
+
+
+
+
+
+<a name="nitric.faas.v1.HttpResponseContext"></a>
+
+### HttpResponseContext
+Specific HttpResponse message
+Note this does not have to be handled by the
+User at all but they will have the option of control
+If they choose...
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| headers | [HttpResponseContext.HeadersEntry](#nitric.faas.v1.HttpResponseContext.HeadersEntry) | repeated | The request headers... |
+| status | [int32](#int32) |  | The HTTP status of the request |
+
+
+
+
+
+
+<a name="nitric.faas.v1.HttpResponseContext.HeadersEntry"></a>
+
+### HttpResponseContext.HeadersEntry
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | [string](#string) |  |  |
+| value | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="nitric.faas.v1.HttpTriggerContext"></a>
+
+### HttpTriggerContext
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| method | [string](#string) |  | The request method |
+| path | [string](#string) |  | The path of the request |
+| headers | [HttpTriggerContext.HeadersEntry](#nitric.faas.v1.HttpTriggerContext.HeadersEntry) | repeated | The request headers |
+| query_params | [HttpTriggerContext.QueryParamsEntry](#nitric.faas.v1.HttpTriggerContext.QueryParamsEntry) | repeated | The query params (if parseable by the membrane) |
+
+
+
+
+
+
+<a name="nitric.faas.v1.HttpTriggerContext.HeadersEntry"></a>
+
+### HttpTriggerContext.HeadersEntry
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | [string](#string) |  |  |
+| value | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="nitric.faas.v1.HttpTriggerContext.QueryParamsEntry"></a>
+
+### HttpTriggerContext.QueryParamsEntry
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | [string](#string) |  |  |
+| value | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="nitric.faas.v1.InitRequest"></a>
+
+### InitRequest
+Placeholder message
+
+
+
+
+
+
+<a name="nitric.faas.v1.InitResponse"></a>
+
+### InitResponse
+Placeholder message
+
+
+
+
+
+
+<a name="nitric.faas.v1.ServerMessage"></a>
+
+### ServerMessage
+Messages the server is able to send to the client
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [string](#string) |  | Server message ID, used to pair requests/responses |
+| init_response | [InitResponse](#nitric.faas.v1.InitResponse) |  | Server responding with client configuration details to an InitRequest |
+| trigger_request | [TriggerRequest](#nitric.faas.v1.TriggerRequest) |  | Server requesting client to process a trigger |
+
+
+
+
+
+
+<a name="nitric.faas.v1.TopicResponseContext"></a>
+
+### TopicResponseContext
+Specific event response message
+We do not accept responses for events
+only whether or not they were successfully processed
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| success | [bool](#bool) |  | Success status of the handled event |
+
+
+
+
+
+
+<a name="nitric.faas.v1.TopicTriggerContext"></a>
+
+### TopicTriggerContext
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| topic | [string](#string) |  | The topic the message was published for |
+
+
+
+
+
+
+<a name="nitric.faas.v1.TriggerRequest"></a>
+
+### TriggerRequest
+The server has a trigger for the client to handle
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| data | [bytes](#bytes) |  | The data in the trigger |
+| mime_type | [string](#string) |  | Should we supply a mime type for the data? Or rely on context? |
+| http | [HttpTriggerContext](#nitric.faas.v1.HttpTriggerContext) |  |  |
+| topic | [TopicTriggerContext](#nitric.faas.v1.TopicTriggerContext) |  |  |
+
+
+
+
+
+
+<a name="nitric.faas.v1.TriggerResponse"></a>
+
+### TriggerResponse
+The worker has successfully processed a trigger
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| data | [bytes](#bytes) |  | The data returned in the response |
+| http | [HttpResponseContext](#nitric.faas.v1.HttpResponseContext) |  | response to a http request |
+| topic | [TopicResponseContext](#nitric.faas.v1.TopicResponseContext) |  | response to a topic trigger |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+
+<a name="nitric.faas.v1.Faas"></a>
+
+### Faas
+Service for streaming communication with gRPC FaaS implementations
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| TriggerStream | [ClientMessage](#nitric.faas.v1.ClientMessage) stream | [ServerMessage](#nitric.faas.v1.ServerMessage) stream | Begin streaming triggers/response to/from the membrane |
 
  
 
@@ -380,8 +569,8 @@ A task to be sent or received from a queue.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | id | [string](#string) |  | A unique id for the task |
-| leaseId | [string](#string) |  | The lease id unique to the pop request, this must be used to complete, extend the lease or release the task. |
-| payloadType | [string](#string) |  | A content hint for the tasks payload |
+| lease_id | [string](#string) |  | The lease id unique to the pop request, this must be used to complete, extend the lease or release the task. |
+| payload_type | [string](#string) |  | A content hint for the tasks payload |
 | payload | [google.protobuf.Struct](#google.protobuf.Struct) |  | The payload of the task |
 
 
@@ -398,7 +587,7 @@ A task to be sent or received from a queue.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | queue | [string](#string) |  | The nitric name for the queue this will automatically be resolved to the provider specific queue identifier. |
-| leaseId | [string](#string) |  | Lease id of the task to be completed |
+| lease_id | [string](#string) |  | Lease id of the task to be completed |
 
 
 
@@ -540,7 +729,7 @@ Request to delete a storage item
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| bucketName | [string](#string) |  | Name of the bucket to delete from |
+| bucket_name | [string](#string) |  | Name of the bucket to delete from |
 | key | [string](#string) |  | Key of item to delete |
 
 
@@ -566,7 +755,7 @@ Request to retrieve a storage item
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| bucketName | [string](#string) |  | Nitric name of the bucket to retrieve from this will be automatically resolved to the provider specific bucket identifier. |
+| bucket_name | [string](#string) |  | Nitric name of the bucket to retrieve from this will be automatically resolved to the provider specific bucket identifier. |
 | key | [string](#string) |  | Key of item to retrieve |
 
 
@@ -597,7 +786,7 @@ Request to put (create/update) a storage item
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| bucketName | [string](#string) |  | Nitric name of the bucket to store in this will be automatically resolved to the provider specific bucket identifier. |
+| bucket_name | [string](#string) |  | Nitric name of the bucket to store in this will be automatically resolved to the provider specific bucket identifier. |
 | key | [string](#string) |  | Key to store the item under |
 | body | [bytes](#bytes) |  | bytes array to store |
 

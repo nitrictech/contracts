@@ -14,19 +14,19 @@ option csharp_namespace = "Nitric.Proto.Document.v1";
 // Service for storage and retrieval of simple JSON keyValue
 service Document {
   // Get an existing document
-  rpc Get (DocGetRequest) returns (DocGetResponse);
+  rpc Get (DocumentGetRequest) returns (DocumentGetResponse);
 
   // Create a new or overwrite an existing document
-  rpc Set (DocSetRequest) returns (DocSetResponse);
+  rpc Set (DocumentSetRequest) returns (DocumentSetResponse);
 
   // Delete an existing document
-  rpc Delete (DocDeleteRequest) returns (DocDeleteResponse);
+  rpc Delete (DocumentDeleteRequest) returns (DocumentDeleteResponse);
   
   // Query the document collection (pagination support)
-  rpc Query (DocQueryRequest) returns (DocQueryResponse);
+  rpc Query (DocumentQueryRequest) returns (DocumentQueryResponse);
   
   // Query All the document collection (streaming support)
-  rpc QueryAll (DocQueryAllRequest) returns (stream DocQueryAllResponse);
+  rpc QueryAll (DocumentQueryAllRequest) returns (stream DocumentQueryAllResponse);
 }
 
 message Key {
@@ -37,7 +37,7 @@ message Key {
   string id = 2;
 }
 
-message DocGetRequest {
+message DocumentGetRequest {
   // The document root key
   Key key = 1;
 
@@ -45,12 +45,12 @@ message DocGetRequest {
   Key sub_key = 2;
 }
 
-message DocGetResponse {
+message DocumentGetResponse {
   // The retrieved value
   google.protobuf.Struct value = 1;
 }
 
-message DocSetRequest {
+message DocumentSetRequest {
   // The document root key
   Key key = 1;
 
@@ -61,9 +61,9 @@ message DocSetRequest {
   google.protobuf.Struct value = 3;
 }
 
-message DocSetResponse {}
+message DocumentSetResponse {}
 
-message DocDeleteRequest {
+message DocumentDeleteRequest {
   // The document root key
   Key key = 1;
 
@@ -71,7 +71,7 @@ message DocDeleteRequest {
   Key sub_key = 2;
 }
 
-message DocDeleteResponse {}
+message DocumentDeleteResponse {}
 
 message Expression {
   // The query operand or attribute
@@ -84,7 +84,7 @@ message Expression {
   string value = 3;
 }
 
-message DocQueryRequest {
+message DocumentQueryRequest {
   // The query root key.collection, and optional parent key.id for subcollection queries
   Key key = 1;
 
@@ -101,7 +101,7 @@ message DocQueryRequest {
   map<string, string> paging_token = 5;
 }
 
-message DocQueryResponse {
+message DocumentQueryResponse {
   // The retrieved values
   repeated google.protobuf.Struct values = 1;
 
@@ -109,7 +109,7 @@ message DocQueryResponse {
   map<string, string> paging_token = 2;
 }
 
-message DocQueryAllRequest {
+message DocumentQueryAllRequest {
   // The query root key.collection, and optional parent key.id for sub collection queries
   Key key = 1;
 
@@ -120,7 +120,7 @@ message DocQueryAllRequest {
   repeated Expression expressions = 3;
 }
 
-message DocQueryAllResponse {
+message DocumentQueryAllResponse {
   // The retrieved values
   repeated google.protobuf.Struct values = 1;
 }

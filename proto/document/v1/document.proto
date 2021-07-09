@@ -51,7 +51,7 @@ message Expression {
   // The query operand or attribute
   string operand = 1;
 
-  // The query operator [ = | < | <= | > | >= | startsWith ]
+  // The query operator [ == | < | <= | > | >= | startsWith ]
   string operator = 2;
 
   // The query expression value

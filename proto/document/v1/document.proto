@@ -29,6 +29,9 @@ service DocumentService {
   rpc QueryStream (DocumentQueryStreamRequest) returns (stream DocumentQueryStreamResponse);
 }
 
+// Message Types
+
+// Provides a document identifying key type
 message Key {
   // The item collection
   string collection = 1;
@@ -37,6 +40,7 @@ message Key {
   string id = 2;
 }
 
+// Provides a return document type
 message Document {
   // The document unique id
   string id = 1;
@@ -44,6 +48,20 @@ message Document {
   // The document content (JSON object)
   google.protobuf.Struct content = 2;
 }
+
+// Provides a query expression type
+message Expression {
+  // The query operand or attribute
+  string operand = 1;
+
+  // The query operator [ = | < | <= | > | >= | startsWith ]
+  string operator = 2;
+
+  // The query expression value
+  string value = 3;
+}
+
+// Service Request & Response Messages
 
 message DocumentGetRequest {
   // The document root key
@@ -80,17 +98,6 @@ message DocumentDeleteRequest {
 }
 
 message DocumentDeleteResponse {}
-
-message Expression {
-  // The query operand or attribute
-  string operand = 1;
-
-  // The query operator [ = | < | <= | > | >= | startsWith ]
-  string operator = 2;
-
-  // The query expression value
-  string value = 3;
-}
 
 message DocumentQueryRequest {
   // The query root key.collection, and optional parent key.id for subcollection queries

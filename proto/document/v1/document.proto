@@ -42,11 +42,8 @@ message Key {
 
 // Provides a return document type
 message Document {
-  // The document unique id
-  string id = 1;
-
   // The document content (JSON object)
-  google.protobuf.Struct content = 2;
+  google.protobuf.Struct content = 1;
 }
 
 // Provides a query expression type

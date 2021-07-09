@@ -42,7 +42,7 @@ message Document {
   string id = 1;
 
   // The document content (JSON object)
-  repeated google.protobuf.Struct content = 2;
+  google.protobuf.Struct content = 2;
 }
 
 message DocumentGetRequest {
@@ -111,7 +111,7 @@ message DocumentQueryRequest {
 
 message DocumentQueryResponse {
   // The retrieved values
-  Document documents = 1;
+  repeated Document documents = 1;
 
   // The query paging continuation token, when empty no further results are available
   map<string, string> paging_token = 2;

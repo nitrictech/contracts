@@ -12,7 +12,7 @@ option php_namespace = "Nitric\\Proto\\Document\\V1";
 option csharp_namespace = "Nitric.Proto.Document.v1";
 
 // Service for storage and retrieval of simple JSON keyValue
-service Document {
+service DocumentService {
   // Get an existing document
   rpc Get (DocumentGetRequest) returns (DocumentGetResponse);
 
@@ -22,11 +22,11 @@ service Document {
   // Delete an existing document
   rpc Delete (DocumentDeleteRequest) returns (DocumentDeleteResponse);
   
-  // Query the document collection (pagination support)
+  // Query the document collection (supports pagination)
   rpc Query (DocumentQueryRequest) returns (DocumentQueryResponse);
   
-  // Query All the document collection (streaming support)
-  rpc QueryAll (DocumentQueryAllRequest) returns (stream DocumentQueryAllResponse);
+  // Query the document collection (supports streaming)
+  rpc QueryStream (DocumentQueryStreamRequest) returns (stream DocumentQueryStreamResponse);
 }
 
 message Key {
@@ -35,6 +35,14 @@ message Key {
 
   // The items unique id
   string id = 2;
+}
+
+message Document {
+  // The document unique id
+  string id = 1;
+
+  // The document content (JSON object)
+  repeated google.protobuf.Struct content = 2;
 }
 
 message DocumentGetRequest {
@@ -47,7 +55,7 @@ message DocumentGetRequest {
 
 message DocumentGetResponse {
   // The retrieved value
-  google.protobuf.Struct value = 1;
+  Document document = 1;
 }
 
 message DocumentSetRequest {
@@ -57,8 +65,8 @@ message DocumentSetRequest {
   // The optional sub collection key
   Key sub_key = 2;
 
-  // A simple JSON object to store
-  google.protobuf.Struct value = 3;
+  // The document content to store (JSON object)
+  google.protobuf.Struct content = 3;
 }
 
 message DocumentSetResponse {}
@@ -103,13 +111,13 @@ message DocumentQueryRequest {
 
 message DocumentQueryResponse {
   // The retrieved values
-  repeated google.protobuf.Struct values = 1;
+  Document documents = 1;
 
-  // The query paging continuation token, when not null further results are available
+  // The query paging continuation token, when empty no further results are available
   map<string, string> paging_token = 2;
 }
 
-message DocumentQueryAllRequest {
+message DocumentQueryStreamRequest {
   // The query root key.collection, and optional parent key.id for sub collection queries
   Key key = 1;
 
@@ -120,7 +128,7 @@ message DocumentQueryAllRequest {
   repeated Expression expressions = 3;
 }
 
-message DocumentQueryAllResponse {
-  // The retrieved values
-  repeated google.protobuf.Struct values = 1;
+message DocumentQueryStreamResponse {
+  // The stream document
+  Document document = 1;
 }

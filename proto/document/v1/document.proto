@@ -129,6 +129,8 @@ message DocumentQueryStreamRequest {
   Collection collection = 1;
   // Optional query expressions
   repeated Expression expressions = 3;
+  // Optional query fetch limit
+  int32 limit = 4;
 }
 
 message DocumentQueryStreamResponse {

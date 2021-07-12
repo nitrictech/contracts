@@ -57,12 +57,14 @@ message Document {
 message ExpressionValue {
   // The kind of value.
   oneof kind {
+    // Represents an integer value.
+    int64 int_value = 1;
     // Represents a double value.
-    double number_value = 1;
+    double double_value = 2;
     // Represents a string value.
-    string string_value = 2;
+    string string_value = 3;
     // Represents a boolean value.
-    bool bool_value = 3;
+    bool bool_value = 4;
   }
 }
 
@@ -70,10 +72,8 @@ message ExpressionValue {
 message Expression {
   // The query operand or attribute
   string operand = 1;
-
   // The query operator [ == | < | <= | > | >= | startsWith ]
   string operator = 2;
-
   // The query expression value
   ExpressionValue value = 3;
 }
@@ -93,7 +93,6 @@ message DocumentGetResponse {
 message DocumentSetRequest {
   // Key of the document to set
   Key key = 1;
-
   // The document content to store (JSON object)
   google.protobuf.Struct content = 3;
 }
@@ -110,13 +109,10 @@ message DocumentDeleteResponse {}
 message DocumentQueryRequest {
   // The collection to query
   Collection collection = 1;
-
   // Optional query expressions
   repeated Expression expressions = 3;
-
   // Optional query fetch limit
   int32 limit = 4;
-
   // Optional query paging continuation token
   map<string, string> paging_token = 5;
 }
@@ -124,7 +120,6 @@ message DocumentQueryRequest {
 message DocumentQueryResponse {
   // The retrieved values
   repeated Document documents = 1;
-
   // The query paging continuation token, when empty no further results are available
   map<string, string> paging_token = 2;
 }
@@ -132,7 +127,6 @@ message DocumentQueryResponse {
 message DocumentQueryStreamRequest {
   // The collection to query
   Collection collection = 1;
-
   // Optional query expressions
   repeated Expression expressions = 3;
 }

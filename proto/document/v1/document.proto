@@ -54,6 +54,18 @@ message Document {
   google.protobuf.Struct content = 1;
 }
 
+message ExpressionValue {
+  // The kind of value.
+  oneof kind {
+    // Represents a double value.
+    double number_value = 1;
+    // Represents a string value.
+    string string_value = 2;
+    // Represents a boolean value.
+    bool bool_value = 3;
+  }
+}
+
 // Provides a query expression type
 message Expression {
   // The query operand or attribute
@@ -63,7 +75,7 @@ message Expression {
   string operator = 2;
 
   // The query expression value
-  string value = 3;
+  ExpressionValue value = 3;
 }
 
 // Service Request & Response Messages

@@ -31,10 +31,18 @@ service DocumentService {
 
 // Message Types
 
+message Collection {
+  // The collection name
+  string name = 1;
+
+  // Optional parent key, required when the collection is a sub-collection of another document
+  Key parent = 2;
+}
+
 // Provides a document identifying key type
 message Key {
   // The item collection
-  string collection = 1;
+  Collection collection = 1;
 
   // The items unique id
   string id = 2;
@@ -46,26 +54,35 @@ message Document {
   google.protobuf.Struct content = 1;
 }
 
+message ExpressionValue {
+  // The kind of value.
+  oneof kind {
+    // Represents an integer value.
+    int64 int_value = 1;
+    // Represents a double value.
+    double double_value = 2;
+    // Represents a string value.
+    string string_value = 3;
+    // Represents a boolean value.
+    bool bool_value = 4;
+  }
+}
+
 // Provides a query expression type
 message Expression {
   // The query operand or attribute
   string operand = 1;
-
   // The query operator [ == | < | <= | > | >= | startsWith ]
   string operator = 2;
-
   // The query expression value
-  string value = 3;
+  ExpressionValue value = 3;
 }
 
 // Service Request & Response Messages
 
 message DocumentGetRequest {
-  // The document root key
+  // Key of the document to retrieve
   Key key = 1;
-
-  // The optional sub collection key
-  Key sub_key = 2;
 }
 
 message DocumentGetResponse {
@@ -74,12 +91,8 @@ message DocumentGetResponse {
 }
 
 message DocumentSetRequest {
-  // The document root key
+  // Key of the document to set
   Key key = 1;
-
-  // The optional sub collection key
-  Key sub_key = 2;
-
   // The document content to store (JSON object)
   google.protobuf.Struct content = 3;
 }
@@ -87,49 +100,37 @@ message DocumentSetRequest {
 message DocumentSetResponse {}
 
 message DocumentDeleteRequest {
-  // The document root key
+  // Key of the document to delete
   Key key = 1;
-
-  // The optional sub collection key
-  Key sub_key = 2;
 }
 
 message DocumentDeleteResponse {}
 
 message DocumentQueryRequest {
-  // The query root key.collection, and optional parent key.id for subcollection queries
-  Key key = 1;
-
-  // The optional sub collection name
-  string sub_collection = 2;
-
-  // The query expressions
+  // The collection to query
+  Collection collection = 1;
+  // Optional query expressions
   repeated Expression expressions = 3;
-
-  // The query fetch limit
+  // Optional query fetch limit
   int32 limit = 4;
-
-  // The query paging continuation token
+  // Optional query paging continuation token
   map<string, string> paging_token = 5;
 }
 
 message DocumentQueryResponse {
   // The retrieved values
   repeated Document documents = 1;
-
   // The query paging continuation token, when empty no further results are available
   map<string, string> paging_token = 2;
 }
 
 message DocumentQueryStreamRequest {
-  // The query root key.collection, and optional parent key.id for sub collection queries
-  Key key = 1;
-
-  // The optional query sub collection name
-  string sub_collection = 2;
-
-  // The query expressions
+  // The collection to query
+  Collection collection = 1;
+  // Optional query expressions
   repeated Expression expressions = 3;
+  // Optional query fetch limit
+  int32 limit = 4;
 }
 
 message DocumentQueryStreamResponse {

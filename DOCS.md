@@ -3,6 +3,27 @@
 
 ## Table of Contents
 
+- [document/v1/document.proto](#document/v1/document.proto)
+    - [Collection](#nitric.document.v1.Collection)
+    - [Document](#nitric.document.v1.Document)
+    - [DocumentDeleteRequest](#nitric.document.v1.DocumentDeleteRequest)
+    - [DocumentDeleteResponse](#nitric.document.v1.DocumentDeleteResponse)
+    - [DocumentGetRequest](#nitric.document.v1.DocumentGetRequest)
+    - [DocumentGetResponse](#nitric.document.v1.DocumentGetResponse)
+    - [DocumentQueryRequest](#nitric.document.v1.DocumentQueryRequest)
+    - [DocumentQueryRequest.PagingTokenEntry](#nitric.document.v1.DocumentQueryRequest.PagingTokenEntry)
+    - [DocumentQueryResponse](#nitric.document.v1.DocumentQueryResponse)
+    - [DocumentQueryResponse.PagingTokenEntry](#nitric.document.v1.DocumentQueryResponse.PagingTokenEntry)
+    - [DocumentQueryStreamRequest](#nitric.document.v1.DocumentQueryStreamRequest)
+    - [DocumentQueryStreamResponse](#nitric.document.v1.DocumentQueryStreamResponse)
+    - [DocumentSetRequest](#nitric.document.v1.DocumentSetRequest)
+    - [DocumentSetResponse](#nitric.document.v1.DocumentSetResponse)
+    - [Expression](#nitric.document.v1.Expression)
+    - [ExpressionValue](#nitric.document.v1.ExpressionValue)
+    - [Key](#nitric.document.v1.Key)
+  
+    - [DocumentService](#nitric.document.v1.DocumentService)
+  
 - [event/v1/event.proto](#event/v1/event.proto)
     - [EventPublishRequest](#nitric.event.v1.EventPublishRequest)
     - [EventPublishResponse](#nitric.event.v1.EventPublishResponse)
@@ -66,6 +87,297 @@
     - [Storage](#nitric.storage.v1.Storage)
   
 - [Scalar Value Types](#scalar-value-types)
+
+
+
+<a name="document/v1/document.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## document/v1/document.proto
+
+
+
+<a name="nitric.document.v1.Collection"></a>
+
+### Collection
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| name | [string](#string) |  | The collection name |
+| parent | [Key](#nitric.document.v1.Key) |  | Optional parent key, required when the collection is a sub-collection of another document |
+
+
+
+
+
+
+<a name="nitric.document.v1.Document"></a>
+
+### Document
+Provides a return document type
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| content | [google.protobuf.Struct](#google.protobuf.Struct) |  | The document content (JSON object) |
+
+
+
+
+
+
+<a name="nitric.document.v1.DocumentDeleteRequest"></a>
+
+### DocumentDeleteRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | [Key](#nitric.document.v1.Key) |  | Key of the document to delete |
+
+
+
+
+
+
+<a name="nitric.document.v1.DocumentDeleteResponse"></a>
+
+### DocumentDeleteResponse
+
+
+
+
+
+
+
+<a name="nitric.document.v1.DocumentGetRequest"></a>
+
+### DocumentGetRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | [Key](#nitric.document.v1.Key) |  | Key of the document to retrieve |
+
+
+
+
+
+
+<a name="nitric.document.v1.DocumentGetResponse"></a>
+
+### DocumentGetResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| document | [Document](#nitric.document.v1.Document) |  | The retrieved value |
+
+
+
+
+
+
+<a name="nitric.document.v1.DocumentQueryRequest"></a>
+
+### DocumentQueryRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| collection | [Collection](#nitric.document.v1.Collection) |  | The collection to query |
+| expressions | [Expression](#nitric.document.v1.Expression) | repeated | Optional query expressions |
+| limit | [int32](#int32) |  | Optional query fetch limit |
+| paging_token | [DocumentQueryRequest.PagingTokenEntry](#nitric.document.v1.DocumentQueryRequest.PagingTokenEntry) | repeated | Optional query paging continuation token |
+
+
+
+
+
+
+<a name="nitric.document.v1.DocumentQueryRequest.PagingTokenEntry"></a>
+
+### DocumentQueryRequest.PagingTokenEntry
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | [string](#string) |  |  |
+| value | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="nitric.document.v1.DocumentQueryResponse"></a>
+
+### DocumentQueryResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| documents | [Document](#nitric.document.v1.Document) | repeated | The retrieved values |
+| paging_token | [DocumentQueryResponse.PagingTokenEntry](#nitric.document.v1.DocumentQueryResponse.PagingTokenEntry) | repeated | The query paging continuation token, when empty no further results are available |
+
+
+
+
+
+
+<a name="nitric.document.v1.DocumentQueryResponse.PagingTokenEntry"></a>
+
+### DocumentQueryResponse.PagingTokenEntry
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | [string](#string) |  |  |
+| value | [string](#string) |  |  |
+
+
+
+
+
+
+<a name="nitric.document.v1.DocumentQueryStreamRequest"></a>
+
+### DocumentQueryStreamRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| collection | [Collection](#nitric.document.v1.Collection) |  | The collection to query |
+| expressions | [Expression](#nitric.document.v1.Expression) | repeated | Optional query expressions |
+| limit | [int32](#int32) |  | Optional query fetch limit |
+
+
+
+
+
+
+<a name="nitric.document.v1.DocumentQueryStreamResponse"></a>
+
+### DocumentQueryStreamResponse
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| document | [Document](#nitric.document.v1.Document) |  | The stream document |
+
+
+
+
+
+
+<a name="nitric.document.v1.DocumentSetRequest"></a>
+
+### DocumentSetRequest
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| key | [Key](#nitric.document.v1.Key) |  | Key of the document to set |
+| content | [google.protobuf.Struct](#google.protobuf.Struct) |  | The document content to store (JSON object) |
+
+
+
+
+
+
+<a name="nitric.document.v1.DocumentSetResponse"></a>
+
+### DocumentSetResponse
+
+
+
+
+
+
+
+<a name="nitric.document.v1.Expression"></a>
+
+### Expression
+Provides a query expression type
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| operand | [string](#string) |  | The query operand or attribute |
+| operator | [string](#string) |  | The query operator [ == | &lt; | &lt;= | &gt; | &gt;= | startsWith ] |
+| value | [ExpressionValue](#nitric.document.v1.ExpressionValue) |  | The query expression value |
+
+
+
+
+
+
+<a name="nitric.document.v1.ExpressionValue"></a>
+
+### ExpressionValue
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| int_value | [int64](#int64) |  | Represents an integer value. |
+| double_value | [double](#double) |  | Represents a double value. |
+| string_value | [string](#string) |  | Represents a string value. |
+| bool_value | [bool](#bool) |  | Represents a boolean value. |
+
+
+
+
+
+
+<a name="nitric.document.v1.Key"></a>
+
+### Key
+Provides a document identifying key type
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| collection | [Collection](#nitric.document.v1.Collection) |  | The item collection |
+| id | [string](#string) |  | The items unique id |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+
+<a name="nitric.document.v1.DocumentService"></a>
+
+### DocumentService
+Service for storage and retrieval of simple JSON keyValue
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| Get | [DocumentGetRequest](#nitric.document.v1.DocumentGetRequest) | [DocumentGetResponse](#nitric.document.v1.DocumentGetResponse) | Get an existing document |
+| Set | [DocumentSetRequest](#nitric.document.v1.DocumentSetRequest) | [DocumentSetResponse](#nitric.document.v1.DocumentSetResponse) | Create a new or overwrite an existing document |
+| Delete | [DocumentDeleteRequest](#nitric.document.v1.DocumentDeleteRequest) | [DocumentDeleteResponse](#nitric.document.v1.DocumentDeleteResponse) | Delete an existing document |
+| Query | [DocumentQueryRequest](#nitric.document.v1.DocumentQueryRequest) | [DocumentQueryResponse](#nitric.document.v1.DocumentQueryResponse) | Query the document collection (supports pagination) |
+| QueryStream | [DocumentQueryStreamRequest](#nitric.document.v1.DocumentQueryStreamRequest) | [DocumentQueryStreamResponse](#nitric.document.v1.DocumentQueryStreamResponse) stream | Query the document collection (supports streaming) |
+
+ 
 
 
 

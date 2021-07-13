@@ -10,7 +10,7 @@ option php_namespace = "Nitric\\Proto\\Faas\\V1";
 option csharp_namespace = "Nitric.Proto.Faas.v1";
 
 // Service for streaming communication with gRPC FaaS implementations
-service Faas {
+service FaasService {
   // Begin streaming triggers/response to/from the membrane
   rpc TriggerStream (stream ClientMessage) returns (stream ServerMessage);
 }

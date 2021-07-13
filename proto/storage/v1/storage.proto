@@ -10,7 +10,7 @@ option php_namespace = "Nitric\\Proto\\Storage\\V1";
 option csharp_namespace = "Nitric.Proto.Storage.v1";
 
 // Services for storage and retrieval of files in the form of byte arrays, such as text and binary files.
-service Storage {
+service StorageService {
   // Retrieve an item from a bucket
   rpc Read (StorageReadRequest) returns (StorageReadResponse);
   // Store an item to a bucket

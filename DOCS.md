@@ -32,8 +32,8 @@
     - [TopicListRequest](#nitric.event.v1.TopicListRequest)
     - [TopicListResponse](#nitric.event.v1.TopicListResponse)
   
-    - [Event](#nitric.event.v1.Event)
-    - [Topic](#nitric.event.v1.Topic)
+    - [EventService](#nitric.event.v1.EventService)
+    - [TopicService](#nitric.event.v1.TopicService)
   
 - [faas/v1/faas.proto](#faas/v1/faas.proto)
     - [ClientMessage](#nitric.faas.v1.ClientMessage)
@@ -50,17 +50,7 @@
     - [TriggerRequest](#nitric.faas.v1.TriggerRequest)
     - [TriggerResponse](#nitric.faas.v1.TriggerResponse)
   
-    - [Faas](#nitric.faas.v1.Faas)
-  
-- [kv/v1/kv.proto](#kv/v1/kv.proto)
-    - [KeyValueDeleteRequest](#nitric.kv.v1.KeyValueDeleteRequest)
-    - [KeyValueDeleteResponse](#nitric.kv.v1.KeyValueDeleteResponse)
-    - [KeyValueGetRequest](#nitric.kv.v1.KeyValueGetRequest)
-    - [KeyValueGetResponse](#nitric.kv.v1.KeyValueGetResponse)
-    - [KeyValuePutRequest](#nitric.kv.v1.KeyValuePutRequest)
-    - [KeyValuePutResponse](#nitric.kv.v1.KeyValuePutResponse)
-  
-    - [KeyValue](#nitric.kv.v1.KeyValue)
+    - [FaasService](#nitric.faas.v1.FaasService)
   
 - [queue/v1/queue.proto](#queue/v1/queue.proto)
     - [FailedTask](#nitric.queue.v1.FailedTask)
@@ -74,7 +64,7 @@
     - [QueueSendRequest](#nitric.queue.v1.QueueSendRequest)
     - [QueueSendResponse](#nitric.queue.v1.QueueSendResponse)
   
-    - [Queue](#nitric.queue.v1.Queue)
+    - [QueueService](#nitric.queue.v1.QueueService)
   
 - [storage/v1/storage.proto](#storage/v1/storage.proto)
     - [StorageDeleteRequest](#nitric.storage.v1.StorageDeleteRequest)
@@ -84,7 +74,7 @@
     - [StorageWriteRequest](#nitric.storage.v1.StorageWriteRequest)
     - [StorageWriteResponse](#nitric.storage.v1.StorageWriteResponse)
   
-    - [Storage](#nitric.storage.v1.Storage)
+    - [StorageService](#nitric.storage.v1.StorageService)
   
 - [Scalar Value Types](#scalar-value-types)
 
@@ -482,9 +472,9 @@ Topic List Response
  
 
 
-<a name="nitric.event.v1.Event"></a>
+<a name="nitric.event.v1.EventService"></a>
 
-### Event
+### EventService
 Service for publishing asynchronous event
 
 | Method Name | Request Type | Response Type | Description |
@@ -492,9 +482,9 @@ Service for publishing asynchronous event
 | Publish | [EventPublishRequest](#nitric.event.v1.EventPublishRequest) | [EventPublishResponse](#nitric.event.v1.EventPublishResponse) | Publishes an message to a given topic |
 
 
-<a name="nitric.event.v1.Topic"></a>
+<a name="nitric.event.v1.TopicService"></a>
 
-### Topic
+### TopicService
 Service for management of event topics
 
 | Method Name | Request Type | Response Type | Description |
@@ -724,126 +714,14 @@ The worker has successfully processed a trigger
  
 
 
-<a name="nitric.faas.v1.Faas"></a>
+<a name="nitric.faas.v1.FaasService"></a>
 
-### Faas
+### FaasService
 Service for streaming communication with gRPC FaaS implementations
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
 | TriggerStream | [ClientMessage](#nitric.faas.v1.ClientMessage) stream | [ServerMessage](#nitric.faas.v1.ServerMessage) stream | Begin streaming triggers/response to/from the membrane |
-
- 
-
-
-
-<a name="kv/v1/kv.proto"></a>
-<p align="right"><a href="#top">Top</a></p>
-
-## kv/v1/kv.proto
-
-
-
-<a name="nitric.kv.v1.KeyValueDeleteRequest"></a>
-
-### KeyValueDeleteRequest
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| collection | [string](#string) |  | The collection containing the existing keyValue to be deleted |
-| key | [string](#string) |  | The unique key of the keyValue to delete |
-
-
-
-
-
-
-<a name="nitric.kv.v1.KeyValueDeleteResponse"></a>
-
-### KeyValueDeleteResponse
-
-
-
-
-
-
-
-<a name="nitric.kv.v1.KeyValueGetRequest"></a>
-
-### KeyValueGetRequest
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| collection | [string](#string) |  | The collection to retrieve the keyValue from |
-| key | [string](#string) |  | The unique key of the keyValue to retrieve |
-
-
-
-
-
-
-<a name="nitric.kv.v1.KeyValueGetResponse"></a>
-
-### KeyValueGetResponse
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| value | [google.protobuf.Struct](#google.protobuf.Struct) |  | The retrieved value |
-
-
-
-
-
-
-<a name="nitric.kv.v1.KeyValuePutRequest"></a>
-
-### KeyValuePutRequest
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| collection | [string](#string) |  | The collection containing the existing keyValue to be inserted or updated. |
-| key | [string](#string) |  | The unique key of the keyValue to put |
-| value | [google.protobuf.Struct](#google.protobuf.Struct) |  | A simple JSON object |
-
-
-
-
-
-
-<a name="nitric.kv.v1.KeyValuePutResponse"></a>
-
-### KeyValuePutResponse
-
-
-
-
-
-
- 
-
- 
-
- 
-
-
-<a name="nitric.kv.v1.KeyValue"></a>
-
-### KeyValue
-Service for storage and retrieval of simple JSON keyValue
-
-| Method Name | Request Type | Response Type | Description |
-| ----------- | ------------ | ------------- | ------------|
-| Get | [KeyValueGetRequest](#nitric.kv.v1.KeyValueGetRequest) | [KeyValueGetResponse](#nitric.kv.v1.KeyValueGetResponse) | Get an existing key |
-| Put | [KeyValuePutRequest](#nitric.kv.v1.KeyValuePutRequest) | [KeyValuePutResponse](#nitric.kv.v1.KeyValuePutResponse) | Create a new or overwrite and existing key |
-| Delete | [KeyValueDeleteRequest](#nitric.kv.v1.KeyValueDeleteRequest) | [KeyValueDeleteResponse](#nitric.kv.v1.KeyValueDeleteResponse) | Delete an existing |
 
  
 
@@ -1010,9 +888,9 @@ Result of pushing a single task to a queue
  
 
 
-<a name="nitric.queue.v1.Queue"></a>
+<a name="nitric.queue.v1.QueueService"></a>
 
-### Queue
+### QueueService
 The Nitric Queue Service contract
 
 | Method Name | Request Type | Response Type | Description |
@@ -1123,9 +1001,9 @@ Result of putting a storage item
  
 
 
-<a name="nitric.storage.v1.Storage"></a>
+<a name="nitric.storage.v1.StorageService"></a>
 
-### Storage
+### StorageService
 Services for storage and retrieval of files in the form of byte arrays, such as text and binary files.
 
 | Method Name | Request Type | Response Type | Description |

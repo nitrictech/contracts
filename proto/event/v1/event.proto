@@ -12,7 +12,7 @@ option php_namespace = "Nitric\\Proto\\Event\\V1";
 option csharp_namespace = "Nitric.Proto.Event.v1";
 
 // Service for publishing asynchronous event
-service Event {
+service EventService {
   // Publishes an message to a given topic
   rpc Publish (EventPublishRequest) returns (EventPublishResponse);
 }
@@ -34,7 +34,7 @@ message EventPublishResponse {
 }
 
 // Service for management of event topics
-service Topic {
+service TopicService {
   // Return a list of existing topics in the provider environment
   rpc List (TopicListRequest) returns (TopicListResponse);
 }

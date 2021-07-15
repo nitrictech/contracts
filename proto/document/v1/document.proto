@@ -82,12 +82,21 @@ message ExpressionValue {
 message Expression {
   // The query operand or attribute
   string operand = 1;
+
   // The query operator [ == | < | <= | > | >= | startsWith ]
   string operator = 2 [(validate.rules).string = {
     in: ["==", "<", "<=", ">", ">=", "startsWith"]
   }];
+
   // The query expression value
   ExpressionValue value = 3 [(validate.rules).message.required = true];
+}
+
+// Set content merge mode: REPLACE existing, MERGE with existing, CONDITIONAL replace
+enum MergeMode {
+  REPLACE = 0;
+  MERGE = 1;
+  CONDITIONAL = 2;
 }
 
 // Service Request & Response Messages
@@ -105,8 +114,12 @@ message DocumentGetResponse {
 message DocumentSetRequest {
   // Key of the document to set
   Key key = 1 [(validate.rules).message.required = true];
+
   // The document content to store (JSON object)
   google.protobuf.Struct content = 3 [(validate.rules).message.required = true];
+
+  // Merge content option
+  optional MergeMode merge = 4 [default = REPLACE];
 }
 
 message DocumentSetResponse {}
@@ -121,17 +134,21 @@ message DocumentDeleteResponse {}
 message DocumentQueryRequest {
   // The collection to query
   Collection collection = 1 [(validate.rules).message.required = true];
+
   // Optional query expressions
-  repeated Expression expressions = 3;
+  repeated Expression expressions = 2;
+
   // Optional query fetch limit
-  int32 limit = 4;
+  int32 limit = 3;
+
   // Optional query paging continuation token
-  map<string, string> paging_token = 5;
+  map<string, string> paging_token = 4;
 }
 
 message DocumentQueryResponse {
   // The retrieved values
   repeated Document documents = 1;
+
   // The query paging continuation token, when empty no further results are available
   map<string, string> paging_token = 2;
 }
@@ -139,10 +156,12 @@ message DocumentQueryResponse {
 message DocumentQueryStreamRequest {
   // The collection to query
   Collection collection = 1 [(validate.rules).message.required = true];
+
   // Optional query expressions
-  repeated Expression expressions = 3;
+  repeated Expression expressions = 2;
+
   // Optional query fetch limit
-  int32 limit = 4;
+  int32 limit = 3;
 }
 
 message DocumentQueryStreamResponse {

@@ -112,6 +112,7 @@ Provides a return document type
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | content | [google.protobuf.Struct](#google.protobuf.Struct) |  | The document content (JSON object) |
+| key | [Key](#nitric.document.v1.Key) |  | The document&#39;s unique key, including collection/sub-collections |
 
 
 

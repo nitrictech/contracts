@@ -52,6 +52,8 @@ message Key {
 message Document {
   // The document content (JSON object)
   google.protobuf.Struct content = 1;
+  // The document's unique key, including collection/sub-collections
+  Key key = 2;
 }
 
 message ExpressionValue {

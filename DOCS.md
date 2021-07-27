@@ -66,6 +66,16 @@
   
     - [QueueService](#nitric.queue.v1.QueueService)
   
+- [secret/v1/secret.proto](#secret/v1/secret.proto)
+    - [Secret](#nitric.secret.v1.Secret)
+    - [SecretAccessRequest](#nitric.secret.v1.SecretAccessRequest)
+    - [SecretAccessResponse](#nitric.secret.v1.SecretAccessResponse)
+    - [SecretPutRequest](#nitric.secret.v1.SecretPutRequest)
+    - [SecretPutResponse](#nitric.secret.v1.SecretPutResponse)
+    - [SecretVersion](#nitric.secret.v1.SecretVersion)
+  
+    - [SecretService](#nitric.secret.v1.SecretService)
+  
 - [storage/v1/storage.proto](#storage/v1/storage.proto)
     - [StorageDeleteRequest](#nitric.storage.v1.StorageDeleteRequest)
     - [StorageDeleteResponse](#nitric.storage.v1.StorageDeleteResponse)
@@ -900,6 +910,128 @@ The Nitric Queue Service contract
 | SendBatch | [QueueSendBatchRequest](#nitric.queue.v1.QueueSendBatchRequest) | [QueueSendBatchResponse](#nitric.queue.v1.QueueSendBatchResponse) | Send multiple events to a queue |
 | Receive | [QueueReceiveRequest](#nitric.queue.v1.QueueReceiveRequest) | [QueueReceiveResponse](#nitric.queue.v1.QueueReceiveResponse) | Receive event(s) off a queue |
 | Complete | [QueueCompleteRequest](#nitric.queue.v1.QueueCompleteRequest) | [QueueCompleteResponse](#nitric.queue.v1.QueueCompleteResponse) | Complete an event previously popped from a queue |
+
+ 
+
+
+
+<a name="secret/v1/secret.proto"></a>
+<p align="right"><a href="#top">Top</a></p>
+
+## secret/v1/secret.proto
+
+
+
+<a name="nitric.secret.v1.Secret"></a>
+
+### Secret
+The secret container
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| name | [string](#string) |  | The secret name |
+
+
+
+
+
+
+<a name="nitric.secret.v1.SecretAccessRequest"></a>
+
+### SecretAccessRequest
+Request to get a secret from a Secret Store
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| secret_version | [SecretVersion](#nitric.secret.v1.SecretVersion) |  | The id of the secret |
+
+
+
+
+
+
+<a name="nitric.secret.v1.SecretAccessResponse"></a>
+
+### SecretAccessResponse
+The secret response
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| secret_version | [SecretVersion](#nitric.secret.v1.SecretVersion) |  | The version of the secret that was requested |
+| value | [bytes](#bytes) |  | The value of the secret |
+
+
+
+
+
+
+<a name="nitric.secret.v1.SecretPutRequest"></a>
+
+### SecretPutRequest
+Request to put a secret to a Secret Store
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| secret | [Secret](#nitric.secret.v1.Secret) |  | The Secret to put to the Secret store |
+| value | [bytes](#bytes) |  | The value to assign to that secret |
+
+
+
+
+
+
+<a name="nitric.secret.v1.SecretPutResponse"></a>
+
+### SecretPutResponse
+Result from putting the secret to a Secret Store
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| secret_version | [SecretVersion](#nitric.secret.v1.SecretVersion) |  | The id of the secret |
+
+
+
+
+
+
+<a name="nitric.secret.v1.SecretVersion"></a>
+
+### SecretVersion
+A version of a secret
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| secret | [Secret](#nitric.secret.v1.Secret) |  | Reference to the secret container |
+| version | [string](#string) |  | The secret version
+
+map&lt;string, string&gt; labels = 4; //Tags for GCP and azure, |
+
+
+
+
+
+ 
+
+ 
+
+ 
+
+
+<a name="nitric.secret.v1.SecretService"></a>
+
+### SecretService
+The Nitric Secret Service contract
+
+| Method Name | Request Type | Response Type | Description |
+| ----------- | ------------ | ------------- | ------------|
+| Put | [SecretPutRequest](#nitric.secret.v1.SecretPutRequest) | [SecretPutResponse](#nitric.secret.v1.SecretPutResponse) | Updates a secret, creating a new one if it doesn&#39;t already exist |
+| Access | [SecretAccessRequest](#nitric.secret.v1.SecretAccessRequest) | [SecretAccessResponse](#nitric.secret.v1.SecretAccessResponse) | Gets a secret from a Secret Store |
 
  
 

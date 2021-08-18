@@ -136,8 +136,10 @@ message DocumentQueryRequest {
 
   // Optional query expressions
   repeated Expression expressions = 3;
+
   // Optional query fetch limit
   int32 limit = 4;
+
   // Optional query paging continuation token
   map<string, string> paging_token = 5;
 }
@@ -145,6 +147,7 @@ message DocumentQueryRequest {
 message DocumentQueryResponse {
   // The retrieved values
   repeated Document documents = 1;
+
   // The query paging continuation token, when empty no further results are available
   map<string, string> paging_token = 2;
 }
@@ -155,6 +158,7 @@ message DocumentQueryStreamRequest {
 
   // Optional query expressions
   repeated Expression expressions = 3;
+
   // Optional query fetch limit
   int32 limit = 4;
 }

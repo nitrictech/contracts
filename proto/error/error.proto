@@ -16,12 +16,15 @@ message ErrorDetails {
     // both explain the error and offer an actionable resolution to it.
     string message = 1;
 
+    // The cause of the error.
+    string cause = 2;
+
     // The API service invoked, e.g. 'Service.Method'.
-    string service = 2;
+    string service = 3;
 
     // The plugin method invoked, e.g. 'PluginService.Method'.
-    string plugin = 3;
+    string plugin = 4;
 
     // The plugin method arguments, ensure only non-senstivie data is specified.
-    string args = 4;
+    string args = 5;
 }

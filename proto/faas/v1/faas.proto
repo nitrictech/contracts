@@ -70,21 +70,27 @@ message TriggerRequest {
   }
 }
 
+message ListString {
+  repeated string value = 1;
+}
+
 message HttpTriggerContext {
+
   // The request method
   string method = 1;
 
   // The path of the request
   string path = 2;
 
-  // The request headers
-  map<string, string> headers = 3;
+  // The old request headers (preserving for backwards compatibility)
+  // TODO: Remove in 1.0
+  map<string, string> headers_old = 3 [deprecated=true];
   
   // The query params (if parseable by the membrane)
   map<string, string> query_params = 4;
 
-  // TODO: Begin parsing these automatically in future
-  //map<string, string> path_params = 3;
+  // HTTP request headers
+  map<string, ListString> headers = 4;
 }
 
 message TopicTriggerContext {
@@ -115,10 +121,15 @@ message TriggerResponse {
 // User at all but they will have the option of control
 // If they choose...
 message HttpResponseContext {
-  // The request headers...
-  map<string, string> headers = 1;
+  // Old HTTP response headers (deprecated)
+  // TODO: Remove in 1.0
+  map<string, string> headers_old = 1 [deprecated=true];
+
   // The HTTP status of the request
   int32 status = 2;
+
+  // HTTP response headers
+  map<string, ListString> headers = 3;
 }
 
 // Specific event response message

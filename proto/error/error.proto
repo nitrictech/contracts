@@ -9,24 +9,19 @@ option java_outer_classname = "Errors";
 option php_namespace = "Nitric\\Proto\\Error\\V1";
 option csharp_namespace = "Nitric.Proto.Error.v1";
 
-// Provides a standard error message for Nitric Service API
-message ServiceError {
-    // The grpc error code as defined by `google.rpc.Code`.
-    int32 code = 1;
-
-    // The status error code as text.
-    string status = 2;
+// Provides a Service Error Details
+message ErrorDetails {
 
     // A developer-facing human-readable error message in English. It should
     // both explain the error and offer an actionable resolution to it.
-    string message = 3;
+    string message = 1;
 
     // The API service invoked, e.g. 'Service.Method'.
-    string service = 4;
+    string service = 2;
 
     // The plugin method invoked, e.g. 'PluginService.Method'.
-    string plugin = 5;
+    string plugin = 3;
 
     // The plugin method arguments, ensure only non-senstivie data is specified.
-    string args = 6;
+    string args = 4;
 }

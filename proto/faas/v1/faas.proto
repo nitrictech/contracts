@@ -70,7 +70,7 @@ message TriggerRequest {
   }
 }
 
-message ListString {
+message HeaderValue {
   repeated string value = 1;
 }
 
@@ -90,7 +90,7 @@ message HttpTriggerContext {
   map<string, string> query_params = 4;
 
   // HTTP request headers
-  map<string, ListString> headers = 4;
+  map<string, HeaderValue> headers = 5;
 }
 
 message TopicTriggerContext {
@@ -129,7 +129,7 @@ message HttpResponseContext {
   int32 status = 2;
 
   // HTTP response headers
-  map<string, ListString> headers = 3;
+  map<string, HeaderValue> headers = 3;
 }
 
 // Specific event response message

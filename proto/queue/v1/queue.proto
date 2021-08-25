@@ -37,7 +37,12 @@ message QueueSendRequest {
 }
 
 // Result of pushing a single task to a queue
-message QueueSendResponse {}
+message QueueSendResponse {
+  // The id of the published message
+  // When an id was not supplied
+  // one should be automatically generated
+  string id = 1;
+}
 
 message QueueSendBatchRequest {
   // The Nitric name for the queue

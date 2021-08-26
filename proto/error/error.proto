@@ -20,11 +20,8 @@ message ErrorScope {
     repeated string args = 3;
 }
 
-// Provides a Service Error Details
 message ErrorDetails {
-
-    // A developer-facing human-readable error message in English. It should
-    // both explain the error and offer an actionable resolution to it.
+    // The developer error message, explaining the error and ideally solution.
     string message = 1;
 
     // The cause of the error.

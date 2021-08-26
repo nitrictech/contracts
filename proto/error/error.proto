@@ -9,6 +9,17 @@ option java_outer_classname = "Errors";
 option php_namespace = "Nitric\\Proto\\Error\\V1";
 option csharp_namespace = "Nitric.Proto.Error.v1";
 
+message ErrorScope {
+    // The API service invoked, e.g. 'Service.Method'.
+    string service = 1;
+
+    // The plugin method invoked, e.g. 'PluginService.Method'.
+    string plugin = 2;
+
+    // The plugin method arguments, ensure only non-senstivie data is specified.
+    repeated string args = 3;
+}
+
 // Provides a Service Error Details
 message ErrorDetails {
 
@@ -19,12 +30,6 @@ message ErrorDetails {
     // The cause of the error.
     string cause = 2;
 
-    // The API service invoked, e.g. 'Service.Method'.
-    string service = 3;
-
-    // The plugin method invoked, e.g. 'PluginService.Method'.
-    string plugin = 4;
-
-    // The plugin method arguments, ensure only non-senstivie data is specified.
-    string args = 5;
+    // The scope of the error.
+    ErrorScope scope = 3;
 }

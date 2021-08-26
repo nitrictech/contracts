@@ -16,7 +16,7 @@ message ErrorScope {
     // The plugin method invoked, e.g. 'PluginService.Method'.
     string plugin = 2;
 
-    // The plugin method arguments, ensure only non-senstivie data is specified.
+    // The plugin method arguments, ensure only non-sensitive data is specified.
     map<string, string> args = 3;
 }
 

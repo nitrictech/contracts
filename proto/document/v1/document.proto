@@ -51,7 +51,7 @@ message Key {
 
   // The items unique id
   string id = 2 [(validate.rules).string = {
-    pattern:   "^\\w+([.\\-]\\w+)*$",
+    min_bytes: 1,
     max_bytes: 256,
   }];
 }
